@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Create a new thread
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+    <div>
+      <form autocomplete="off" (ngSubmit)="createThread(createThreadForm.value)" #createThreadForm="ngForm">
+        <ion-list>
+          <ion-item>
+            <ion-input type="text" placeholder="Title" name="ThreadTitle" (ngModel)="title"></ion-input>
+          </ion-item>
+        </ion-list>
+        <div align-center>
+          <button type="submit" full ion-button color="secondary">Create</button>
+          <button type="button" full ion-button color="danger" (click)="cancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+</ion-content>

@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Post Comment
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div>
+    <form autocomplete="off" (ngSubmit)="postComment(createPostForm.value)" #createPostForm="ngForm">
+      <ion-list>
+        <ion-item>
+          <ion-textarea placeholder="Comment" name="Comment" (ngModel)="comment"></ion-textarea>
+        </ion-item>
+      </ion-list>
+      <div align-center>
+        <button type="submit" full ion-button color="secondary">Create</button>
+        <button type="button" full ion-button color="danger" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</ion-content>

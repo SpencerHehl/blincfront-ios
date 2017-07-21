@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Near Me
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding style="background-color: #cbd3db">
+  <ion-row>
+    <ion-col *ngFor="let Location of nearbyLocations">
+      <location-card [Location]="Location" (viewThisLocation)="viewLocation($event)" (navigateThisLocation)="navigateLocation($event)"></location-card>
+    </ion-col>
+  </ion-row>
+  <p *ngIf="!nearbyLocations">Woah it is pretty lonely here. Looks like you are a pioneer in your area. Check in to locations and get the conversation started!</p>
+  <ion-fab right bottom>
+    <button ion-fab (click)="checkIn()"><ion-icon name="pin"></ion-icon></button>
+  </ion-fab>
+</ion-content>

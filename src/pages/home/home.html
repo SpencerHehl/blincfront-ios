@@ -1,17 +1,15 @@
 <ion-header>
   <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="myProfile()" *ngIf="authService.isAuthenticated()">{{authService.currentUser.firstName}} {{authService.currentUser.lastName}}</button>
+    </ion-buttons>
     <ion-title>Home</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="login()" *ngIf="!authService.isAuthenticated()">Login</button>
+      <button ion-button (click)="settings()" *ngIf="authService.isAuthenticated()" icon-right><ion-icon name="settings"></ion-icon>Settings</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+<ion-content padding style="background-color: #cbd3db">
 </ion-content>

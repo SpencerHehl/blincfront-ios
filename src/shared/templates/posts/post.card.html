@@ -1,0 +1,29 @@
+  <ion-card>
+    <ion-item>
+      <ion-avatar item-start>
+        <img [src]="Post.User.Avatar">
+      </ion-avatar>
+      <ion-note float-right>
+        {{Post.PostAge}} ago
+      </ion-note>
+      <h2>{{Post.User.Name}}</h2>
+    </ion-item>
+    <ion-card-content [ngSwitch]="Post.Content.Type">
+      <img *ngSwitchCase="'Image'" [src]="Post.IMG">
+      <p *ngSwitchDefault>{{Post.Content.Body}}</p>
+    </ion-card-content>
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-lef clear small (click)="LikePost(Post.ID)" [color]="likeColor">
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>{{Post.NumLikes}} Likes</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="ViewComments(Post)" color="dark">
+          <ion-icon name="text"></ion-icon>
+          <div>{{Post.NumComments}} Comments</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>

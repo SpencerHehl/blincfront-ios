@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Sign In
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="cancel()">Cancel</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div style="text-align:center">
+        <button ion-button (click)="facebookLogin()" large><ion-icon name="logo-facebook" style="padding-right:1em"></ion-icon>Facebook</button>
+    </div>
+    <div style="text-align:center">
+        <button ion-button color="danger" (click)="googleLogin()" large><ion-icon name="logo-google" style="padding-right:1em"></ion-icon>Google</button>
+    </div>
+</ion-content>

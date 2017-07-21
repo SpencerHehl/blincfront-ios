@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+        {{CurrentLocation?.name}}
+      </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding style="background-color: #cbd3db">
+  <ion-input type="text" placeholder="Search threads.." name="threadsearch"></ion-input>
+  <div *ngFor="let Thread of LocThreads">
+    <thread-card [Thread]="Thread" (viewThisThread)="viewThread($event)" (likeThisThread)="likeThread($event)" (favoriteThisThread)="favoriteThread($event)"></thread-card>
+  </div>
+    <ion-fab right bottom>
+      <button ion-fab (click)="createThread(CurrentLocation._id)" [hidden]="postMode == 'readOnly'"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-content>
