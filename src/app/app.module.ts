@@ -33,6 +33,15 @@ import { AuthService } from '../shared/services/auth.service';
 const cloudSettings: CloudSettings = {
   'core': {
     'app_id': '95855829'
+  },
+  'auth': {
+    'google': {
+      'webClientId': '819051050180-tjmq0ap9h09r4b594s54f2hicnsjgqlc.apps.googleusercontent.com',
+      'scope': []
+    },
+    'facebook': {
+      'scope': []
+    }
   }
 }
 
