@@ -7,7 +7,7 @@ export class PostService{
     constructor(private http: Http){}
 
     getThreadPosts(ThreadID){
-        return this.http.get('/post/' + ThreadID).map((response: Response) => {
+        return this.http.get('http://www.blincapp.com/post/' + ThreadID).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);  
     }
@@ -16,7 +16,7 @@ export class PostService{
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
 
-        return this.http.post('/post/', Post, options).map((response: Response) => {
+        return this.http.post('http://www.blincapp.com/post/', Post, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }

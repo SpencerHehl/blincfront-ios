@@ -8,11 +8,14 @@
 
 <ion-content padding style="background-color: #cbd3db;">
   <ion-row>
-    <ion-col *ngFor="let Location of MyLocations">
-      <location-card [Location]="Location" (viewThisLocation)="viewLocation($event)" (navigateThisLocation)="navigateLocation($event)"></location-card>
+    <ion-col *ngFor="let Location of myLocations.favoriteLocations">
+      <location-card [Location]="Location" [isFavorite]='true' (viewThisLocation)="viewLocation($event)" (navigateThisLocation)="navigateLocation($event)"></location-card>
+    </ion-col>
+    <ion-col *ngFor="let Location of myLocations.visitedLocations">
+      <location-card [Location]="Location" [isFavorite]='false' (viewThisLocation)="viewLocation($event)" (navigateThisLocation)="navigateLocation($event)"></location-card>
     </ion-col>
   </ion-row>
   <ion-fab right bottom>
-    <button ion-fab (click)="checkIn()"><ion-icon name="pin"></ion-icon></button>
+    <button ion-fab (click)="checkLocation()"><ion-icon name="pin"></ion-icon></button>
   </ion-fab>
 </ion-content>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
+import { AuthService } from '../../../shared/services/auth.service';
 
 declare var google;
 
@@ -13,10 +14,10 @@ export class LocationService{
         lng: number,
         place_id: string
     };
-    constructor(private http: Http, private geolocation: Geolocation){}
+    constructor(private http: Http, private geolocation: Geolocation, private authService: AuthService){}
     
     getMyLocations(){
-        return this.http.get('/mylocations').map((response: Response) => {
+        return this.http.get('http://www.blincapp.com/location/mylocations').map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }
@@ -25,19 +26,17 @@ export class LocationService{
         return Observable.fromPromise(this.geolocation.getCurrentPosition().then((resp) => {
             this.mylocation.lat = resp.coords.latitude;
             this.mylocation.lng = resp.coords.longitude;
-            return this.http.get('/nearme?lat=' + this.mylocation.lat + '&lng=' + this.mylocation.lng).map((response: Response) => {
+            return this.http.get('http://www.blincapp.com/location/nearme?lat=' + this.mylocation.lat + '&lng=' + this.mylocation.lng).map((response: Response) => {
                 return response.json();
             }).catch(this.handleError);
-        }).catch((error) => {
-            console.log(error);  
-        }));
+        }).catch(this.handleError));
     }
 
     favoriteLocation(selectedLocation){
         console.log(selectedLocation);
     }
 
-    checkIn(){
+    checkLocation(){
         return Observable.fromPromise(this.geolocation.getCurrentPosition().then((resp) =>{
             this.mylocation.lat = resp.coords.latitude;
             this.mylocation.lng = resp.coords.longitude;
@@ -47,31 +46,40 @@ export class LocationService{
                     if(status == 'OK') {
                         if(results[1]){
                             this.mylocation.place_id = results[1].place_id;
-                            return this.http.get('/checkin/' + this.mylocation.place_id).map((response: Response) => {
-                                if(response.json() == ''){
-                                    return this.checkInNew()
-                                }else{
-                                    return response.json();
-                                }
+                            return this.http.get('http://www.blincapp.com/location/resolve/' + this.mylocation.place_id).map((response: Response) => {
+                                return response.json();
                             }).catch(this.handleError);
                         }
                     }
                 }
             });
-        }).catch((error) => {
-            console.log(error);
-        }));
+        }).catch(this.handleError));
     }
 
     checkInNew(){
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
-        return this.http.post('/checkin/new', this.mylocation, options).map((response: Response) => {
+        return this.http.post('http://www.blincapp.com/location/checkin/new', this.mylocation, options).map((response: Response) => {
             return response.json();  
         }).catch(this.handleError);
+    }
+
+    checkIn(resolvedLocation){
+        if(resolvedLocation.resolve == 'mongo'){
+            return this.http.get('http://www.blincapp.com/location/checkin/' + resolvedLocation.data.placeId).map((response: Response) => {
+                return response.json();
+            });
+        }else{
+            return this.checkInNew();
+        }
+    }
+
+    searchLocation(data){
+
     }
 
     private handleError(error: Response){
         return Observable.throw(error.statusText);
     }
+
 }

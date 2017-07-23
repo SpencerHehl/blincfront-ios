@@ -11,15 +11,17 @@ export class AuthService {
 
     login(user){
         this.currentUser = user;
-        this.currentUser.ionic_id = this.user.id;
+        this.currentUser = this.user.id;
     }
 
-    newUser(user){
-        this.login(user);
+    newUser(passedUser){
+        let newUser = passedUser;
+        newUser.ionic_id = this.user.id;
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
-        return this.http.post('/user/newuser', this.currentUser, options).map((response: Response) => {
-            return response.json();
+        return this.http.post('http://www.blincapp.com/user/newuser', this.newUser, options).map((response: Response) => {
+            this.currentUser = response.json();
+            return "Completed";
         }).catch(this.handleError);
     }
 

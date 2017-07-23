@@ -7,7 +7,7 @@ export class ThreadService{
     constructor(private http: Http){}
 
     getLocationThreads(LocationID){
-        return this.http.get('/thread/' + LocationID).map((response: Response) => {
+        return this.http.get('http://www.blincapp.com/thread/' + LocationID).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }
@@ -15,7 +15,7 @@ export class ThreadService{
     createThread(Thread){
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
-        return this.http.post('/thread/', Thread, options).map((response: Response) => {
+        return this.http.post('http://www.blincapp.com/thread/', Thread, options).map((response: Response) => {
             return response.json()
         }).catch(this.handleError);
     }
@@ -34,49 +34,4 @@ export class ThreadService{
     private handleError(error: Response){
         return Observable.throw(error.statusText);
     }
-}
-
-const Threads = {
-    1: [{
-        Title: "General",
-        Tags: ['#General', '#Permanent', '#Pinned'],
-        NumPosts: 32,
-        NumLikes: 17,
-        NumFavorites: 2,
-        isLiked: false,
-        isFavorite: false
-    },{
-        Title: "Photos/Videos",
-        Tags: ["#Permanent"],
-        NumPosts: 21,
-        NumLikes: 43,
-        NumFavorites: 5,
-        isLiked: false,
-        isFavorite: false
-    }],
-    2: [{
-        Title: "Tips/Trics",
-        Tags: ['#General', '#Permanent', '#Pinned'],
-        NumPosts: 32,
-        NumLikes: 17,
-        NumFavorites: 2,
-        isLiked: false,
-        isFavorite: false
-    },{
-        Title: "Photos/Videos",
-        Tags: ["#Permanent"],
-        NumPosts: 21,
-        NumLikes: 43,
-        NumFavorites: 5,
-        isLiked: false,
-        isFavorite: false
-    },{
-        Title: "General",
-        Tags: ["#Permanent"],
-        NumPosts: 21,
-        NumLikes: 43,
-        NumFavorites: 5,
-        isLiked: false,
-        isFavorite: false
-    }]
 }

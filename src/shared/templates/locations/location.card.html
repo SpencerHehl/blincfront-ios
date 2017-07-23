@@ -1,7 +1,7 @@
   <ion-card>
     <ion-card-header text-uppercase>
       {{Location.Name}}
-      <h1 [hidden]="!Location.Favorite"><ion-icon name="star"></ion-icon>Favorited</h1>
+      <h1 [hidden]="!isFavorite"><ion-icon name="star"></ion-icon>Favorited</h1>
     </ion-card-header>
     <ion-card-content>
       <ion-row>

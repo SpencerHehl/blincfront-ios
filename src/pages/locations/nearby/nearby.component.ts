@@ -14,7 +14,8 @@ export class NearbyPage implements OnInit{
 
     ngOnInit() {
         this.locationService.getNearbyLocations().subscribe(
-            locations => this.nearbyLocations
+            locations => this.nearbyLocations,
+            err => alert(err)
         );
     }
 
@@ -29,6 +30,7 @@ export class NearbyPage implements OnInit{
     checkIn(){
         this.locationService.checkIn().subscribe(
           locationId => {this.myLocation},
+          err => alert(err),
           () => this.navCtrl.push(ThreadListPage, {location: this.myLocation})
         );
     }

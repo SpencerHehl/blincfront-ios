@@ -9,6 +9,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class LocationCardComponent {
     @Input() Location: any;
+    @Input() isFavorite: boolean;
     @Output() viewThisLocation = new EventEmitter();
     @Output() navigateThisLocation = new EventEmitter();
     constructor(){}
