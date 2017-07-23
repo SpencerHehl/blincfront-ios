@@ -80,23 +80,25 @@ export class LocationsPage implements OnInit{
         {
           text: 'Cancel',
           handler: data => {
-            this.locationService.searchLocation(data).subscribe(
-              response => {
-                if(response == '' || response == null){
-                  this.failAlert("No results found.");
-                }else{
-                  this.myLocation = response;
-                }
-              },
-              err => this.failAlert(err),
-              () => this.navCtrl.push(ThreadListPage, {location: this.myLocation})
-            );
+            
           }
         },
         {
           text: 'Search',
           handler: data => {
-
+            var resolvedLocation = this.locationService.searchLocation(data);
+            if(resolvedLocation == "Location found"){
+              this.locationService.checkSearchedLocation().subscribe(
+                response => {this.locationService.checkIn(response).subscribe(
+                  response => {this.resolvedLocation},
+                  err => this.failAlert(err),
+                  () => this.navCtrl.push(ThreadListPage, {location: this.myLocation})
+                )},
+                err => this.failAlert(err)
+              );
+            }else{
+              this.failAlert(resolvedLocation);
+            }
           }
         }
       ]

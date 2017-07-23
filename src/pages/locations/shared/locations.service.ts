@@ -56,6 +56,12 @@ export class LocationService{
         }).catch(this.handleError));
     }
 
+    checkSearchedLocation(){
+        return this.http.get('http://www.blincapp.com/location/resolve/' + this.mylocation.place_id).map((response: Response) => {
+            return response.json();
+        }).catch(this.handleError);
+    }
+
     checkInNew(){
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
@@ -75,7 +81,23 @@ export class LocationService{
     }
 
     searchLocation(data){
-
+        let placeService = new google.maps.places.PlacesService();
+        var googleLocation = new google.maps.LatLng(this.mylocation.lat,this.mylocation.lng);
+        var request = {
+            query: data,
+            radius: '20',
+            location: googleLocation
+        };
+        return placeService.textSearch(request, function(results, status){
+            if(status == google.maps.places.PlacesServiceStatus.OK){
+                if(results.length >= 1){
+                    this.mylocation.place_id = results[0].place_id;
+                    return "Location found";
+                }else{
+                    return "Location not found";
+                }
+            }
+        })
     }
 
     private handleError(error: Response){
