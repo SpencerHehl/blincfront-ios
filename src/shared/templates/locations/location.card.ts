@@ -12,6 +12,7 @@ export class LocationCardComponent {
     @Input() isFavorite: boolean;
     @Output() viewThisLocation = new EventEmitter();
     @Output() navigateThisLocation = new EventEmitter();
+    @Output() favoriteThisLocation = new EventEmitter();
     constructor(){}
 
     viewLocation(selectedLocation){
@@ -20,5 +21,9 @@ export class LocationCardComponent {
 
     navigateLocation(locationLatLon){
         this.navigateThisLocation.emit(locationLatLon);
+    }
+
+    favoriteLocation(selectedLocation){
+        this.favoriteThisLocation.emit(selectedLocation);
     }
 }

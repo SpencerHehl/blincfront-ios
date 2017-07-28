@@ -8,11 +8,11 @@
 
 <ion-content padding style="background-color: #cbd3db;">
   <ion-row>
-    <ion-col *ngFor="let Location of myLocations.favoriteLocations">
-      <location-card [Location]="Location" [isFavorite]='true' (viewThisLocation)="viewLocation($event)" (navigateThisLocation)="navigateLocation($event)"></location-card>
+    <ion-col *ngFor="let Location of myLocations.favoriteLocations; let i = index">
+      <location-card [Location]="Location" [isFavorite]='true' (viewThisLocation)="viewLocation($event)" (navigateThisLocation)="navigateLocation($event)" (favoriteThisLocation)="unfavoriteLocation(i, $event)"></location-card>
     </ion-col>
-    <ion-col *ngFor="let Location of myLocations.visitedLocations">
-      <location-card [Location]="Location" [isFavorite]='false' (viewThisLocation)="viewLocation($event)" (navigateThisLocation)="navigateLocation($event)"></location-card>
+    <ion-col *ngFor="let Location of myLocations.visitedLocations; let i = index">
+      <location-card [Location]="Location" [isFavorite]='false' (viewThisLocation)="viewLocation($event)" (navigateThisLocation)="navigateLocation($event)" (favoriteThisLocation)="favoriteLocation(i, $event)"></location-card>
     </ion-col>
   </ion-row>
   <ion-fab right bottom>

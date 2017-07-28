@@ -9,55 +9,65 @@ declare var google;
 @Injectable()
 export class LocationService{
     data: any;
-    mylocation: {
-        lat: number,
-        lng: number,
-        place_id: string
-    };
+    myLocation: any;
+    placeId: any;
+    oldLocations: any;
     constructor(private http: Http, private geolocation: Geolocation, private authService: AuthService){}
     
     getMyLocations(){
-        return this.http.get('http://www.blincapp.com/location/mylocations').map((response: Response) => {
+        return this.http.get('http://104.238.138.146:8080/location/mylocations').map((response: Response) => {
+            this.oldLocations = response.json();
             return response.json();
         }).catch(this.handleError);
     }
 
     getNearbyLocations(){
         return Observable.fromPromise(this.geolocation.getCurrentPosition().then((resp) => {
-            this.mylocation.lat = resp.coords.latitude;
-            this.mylocation.lng = resp.coords.longitude;
-            return this.http.get('http://www.blincapp.com/location/nearme?lat=' + this.mylocation.lat + '&lng=' + this.mylocation.lng).map((response: Response) => {
+            this.myLocation.lat = resp.coords.latitude;
+            this.myLocation.lng = resp.coords.longitude;
+            return this.http.get('http://104.238.138.146:8080/location/nearme?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng).map((response: Response) => {
                 return response.json();
             }).catch(this.handleError);
         }).catch(this.handleError));
     }
 
-    favoriteLocation(selectedLocation){
-        console.log(selectedLocation);
+    favoriteLocation(locationsObj){
+        if(!(JSON.stringify(this.oldLocations) === JSON.stringify(locationsObj))){
+            let headers = new Headers({'Content-type': 'application/json'});
+            let options = new RequestOptions({headers: headers});
+            this.http.put('http://104.238.138.146:8080/location/favorite', locationsObj, options).subscribe();
+        }
     }
 
     checkLocation(){
-        return Observable.fromPromise(this.geolocation.getCurrentPosition().then((resp) =>{
-            this.mylocation.lat = resp.coords.latitude;
-            this.mylocation.lng = resp.coords.longitude;
-            let geocoder = new google.maps.Geocoder;
-
-            return geocoder.geocode({location: this.mylocation, function(results, status){
-                    if(status == 'OK') {
-                        if(results[1]){
-                            this.mylocation.place_id = results[1].place_id;
-                            return this.http.get('http://www.blincapp.com/location/resolve/' + this.mylocation.place_id).map((response: Response) => {
-                                return response.json();
-                            }).catch(this.handleError);
-                        }
-                    }
-                }
+        let myLocation;
+        return Observable.fromPromise(this.geolocation.getCurrentPosition())
+            .map((resp) => {
+                myLocation = {
+                    lat: resp.coords.latitude,
+                    lng: resp.coords.longitude
+                };
+                console.log(myLocation);
+                this.reverseGeocode(myLocation);
             });
-        }).catch(this.handleError));
+            /*.flatMap((resp) => {
+
+                return Observable.fromPromise()
+                    .map((resp) => {
+                        
+                    })
+                    .flatMap((resp) => {
+                        return this.http.get('http://104.238.138.146:8080/location/resolve/' + this.placeId).map((response: Response) => {
+                            console.log("stuff");
+                            return response.json();
+                        }).catch(this.handleError);
+                    });
+            });*/
+                
     }
 
     checkSearchedLocation(){
-        return this.http.get('http://www.blincapp.com/location/resolve/' + this.mylocation.place_id).map((response: Response) => {
+        return this.http.get('http://104.238.138.146:8080/location/resolve/' + this.placeId).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }
@@ -65,14 +75,14 @@ export class LocationService{
     checkInNew(){
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
-        return this.http.post('http://www.blincapp.com/location/checkin/new', this.mylocation, options).map((response: Response) => {
+        return this.http.post('http://104.238.138.146:8080/location/checkin/new', this.myLocation, options).map((response: Response) => {
             return response.json();  
         }).catch(this.handleError);
     }
 
     checkIn(resolvedLocation){
         if(resolvedLocation.resolve == 'mongo'){
-            return this.http.get('http://www.blincapp.com/location/checkin/' + resolvedLocation.data.placeId).map((response: Response) => {
+            return this.http.get('http://104.238.138.146:8080/location/checkin/' + resolvedLocation.data.placeId).map((response: Response) => {
                 return response.json();
             });
         }else{
@@ -82,7 +92,7 @@ export class LocationService{
 
     searchLocation(data){
         let placeService = new google.maps.places.PlacesService();
-        var googleLocation = new google.maps.LatLng(this.mylocation.lat,this.mylocation.lng);
+        var googleLocation = new google.maps.LatLng(this.myLocation.lat,this.myLocation.lng);
         var request = {
             query: data,
             radius: '20',
@@ -98,6 +108,18 @@ export class LocationService{
                 }
             }
         })
+    }
+
+    private reverseGeocode(myGeolocation){
+        let geocoder = new google.maps.Geocoder;
+        geocoder.geocode({'location': {lat: myGeolocation.lat, lng: myGeolocation.lng}})
+        .then((resp) => {
+            if(status == 'OK'){
+                this.placeId = resp[0].place_id;
+                console.log(this.placeId);
+                console.log(resp);
+            }
+        });
     }
 
     private handleError(error: Response){

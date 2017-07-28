@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="myProfile()" *ngIf="authService.isAuthenticated()">{{authService.currentUser.full_name}}</button>
+      <button ion-button (click)="myProfile()" *ngIf="authService.isAuthenticated()">{{authService.currentUser.fullName}}</button>
     </ion-buttons>
     <ion-title>Home</ion-title>
     <ion-buttons end>

@@ -19,11 +19,11 @@ export class AuthService {
         newUser.ionic_id = this.user.id;
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
-        return this.http.post('http://www.blincapp.com/user/newuser', this.newUser, options).map((response: Response) => {
+        return this.http.post('http://104.238.138.146:8080/user/newuser', newUser, options).map((response: Response) => {
             this.currentUser = response.json();
-            return "Completed";
+            return JSON.stringify(response.json());
         }).catch(this.handleError);
-    }
+}
 
     isAuthenticated(){
         return !!this.currentUser;

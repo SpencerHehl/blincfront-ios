@@ -32,12 +32,24 @@ export class LocationsPage implements OnInit{
 
   }
 
+  favoriteLocation(locationIndex, location){
+    this.myLocations.favoriteLocations.push(location);
+    this.myLocations.visitedLocations.splice(locationIndex);
+  }
+
+  unfavoriteLocation(locationIndex, location){
+    this.myLocations.visitedLocations.push(location);
+    this.myLocations.favoriteLocations.splice(locationIndex);
+  }
+
+  //still need to call a function before page navigation that saves the changes.
+
   checkLocation(){
-      this.locationService.checkLocation().subscribe(
+      /*this.locationService.checkLocation().subscribe(
           response => {this.resolvedLocation},
           err => this.failAlert(err),
           () => this.confirmLocation()
-      );
+      );*/
   }
 
   confirmLocation(){
