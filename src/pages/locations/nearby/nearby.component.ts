@@ -32,9 +32,11 @@ export class NearbyPage implements OnInit{
 
     checkLocation(){
         this.locationService.checkLocation().subscribe(
-            response => {this.resolvedLocation},
-            err => this.failAlert(err),
-            () => this.failAlert(JSON.stringify(this.resolvedLocation))
+            response => {
+                this.resolvedLocation = response;
+                this.failAlert(JSON.stringify(this.resolvedLocation));
+            },
+            err => this.failAlert(err)
         );
     }
 

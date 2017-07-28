@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import { AuthService } from '../../../shared/services/auth.service';
 
 declare var google;
+declare var gapi;
 
 @Injectable()
 export class LocationService{
@@ -41,29 +42,64 @@ export class LocationService{
 
     checkLocation(){
         let myLocation;
-        return Observable.fromPromise(this.geolocation.getCurrentPosition())
+        /*this.geolocation.getCurrentPosition().then((resp) => {
+            myLocation = {
+                lat: resp.coords.latitude,
+                lng: resp.coords.longitude
+            };
+            console.log(myLocation);
+            let geocoder = new google.maps.Geocoder;
+            geocoder.geocode({'location': {lat: myLocation.lat, lng: myLocation.lng}}, function(result, status){
+                console.log(status);
+                if(status == 'OK'){
+                    this.placeId = result[0].place_id;
+                    console.log(result);
+                    return this.http.get('http://104.238.138.146:8080/location/resolve/' + this.placeId).map((response: Response) => {
+                        return response.json();
+                    }).catch(this.handleError);
+                }
+            });
+        });*/
+        /*return Observable.fromPromise(this.geolocation.getCurrentPosition())
             .map((resp) => {
                 myLocation = {
                     lat: resp.coords.latitude,
                     lng: resp.coords.longitude
                 };
                 console.log(myLocation);
-                this.reverseGeocode(myLocation);
-            });
-            /*.flatMap((resp) => {
-
-                return Observable.fromPromise()
-                    .map((resp) => {
-                        
-                    })
-                    .flatMap((resp) => {
-                        return this.http.get('http://104.238.138.146:8080/location/resolve/' + this.placeId).map((response: Response) => {
-                            console.log("stuff");
+                let geocoder = new google.maps.Geocoder;
+                geocoder.geocode({'location': {lat: myLocation.lat, lng: myLocation.lng}}, function(result, status){
+                    console.log(status);
+                    if(status == 'OK'){
+                        var placeId = result[0].place_id;
+                        console.log(result);
+                        return this.http.get('http://104.238.138.146:8080/location/resolve/' + placeId).map((response: Response) => {
                             return response.json();
                         }).catch(this.handleError);
-                    });
+                    }
+                });
             });*/
-                
+
+        return Observable.fromPromise(this.geolocation.getCurrentPosition())
+            .map((resp) => {
+                myLocation = {
+                    lat: resp.coords.latitude,
+                    lng: resp.coords.longitude
+                };
+                return myLocation
+            })
+            .flatMap((location) => {
+                return this.reverseGeo(location)
+                    .map((placeid) => {
+                        console.log(placeid);
+                        return placeid;
+                    });
+            }).flatMap((placeid) => {
+                return this.http.get('http://localhost:8080/location/resolve/' + placeid).map((response: Response) => {
+                    console.log(response);
+                    return response.json();
+                })
+            }).catch(this.handleError);
     }
 
     checkSearchedLocation(){
@@ -110,16 +146,22 @@ export class LocationService{
         })
     }
 
-    private reverseGeocode(myGeolocation){
+    private reverseGeo(myLocation){
         let geocoder = new google.maps.Geocoder;
-        geocoder.geocode({'location': {lat: myGeolocation.lat, lng: myGeolocation.lng}})
-        .then((resp) => {
-            if(status == 'OK'){
-                this.placeId = resp[0].place_id;
-                console.log(this.placeId);
-                console.log(resp);
+        return Observable.create(observer => {
+            geocoder.geocode({'location': {lat: myLocation.lat, lng: myLocation.lng}}, function(result, status){
+                console.log(status);
+                if(status == 'OK'){
+                    observer.next(result[0].place_id);
+                }else{
+                    observer.error(status);
+                }
+            });
+
+            return () => {
+                console.log("complete");
             }
-        });
+        })
     }
 
     private handleError(error: Response){
