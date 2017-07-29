@@ -7,7 +7,7 @@ export class ThreadService{
     constructor(private http: Http){}
 
     getLocationThreads(LocationID){
-        return this.http.get('http://www.blincapp.com/thread/' + LocationID).map((response: Response) => {
+        return this.http.get('http://104.238.138.146:8080/thread/' + LocationID).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }
@@ -15,7 +15,7 @@ export class ThreadService{
     createThread(Thread){
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
-        return this.http.post('http://www.blincapp.com/thread/', Thread, options).map((response: Response) => {
+        return this.http.post('http://104.238.138.146:8080/thread/', Thread, options).map((response: Response) => {
             return response.json()
         }).catch(this.handleError);
     }

@@ -11,8 +11,8 @@ export class LoginModal {
     constructor(public alertCtrl: AlertController, private authService: AuthService, private NavParams: NavParams, public viewController: ViewController, public googleAuth: GoogleAuth, public user: User, public facebookAuth: FacebookAuth){}
 
     facebookLogin(){
-        this.facebookAuth.login().then((res) => {
-            if(res.signup){
+        this.facebookAuth.login().then((resp) => {
+            if(resp.signup){
                 this.authService.newUser(this.user.social.facebook.data).subscribe(
                     () => this.viewController.dismiss()
                 );
@@ -24,8 +24,8 @@ export class LoginModal {
     }
 
     googleLogin(){
-        this.googleAuth.login().then((res) =>{
-            if(res.signup){
+        this.googleAuth.login().then((resp) =>{
+            if(resp.signup){
                 this.authService.newUser(this.user.social.google.data).subscribe(
                     response => this.failAlert(response),
                     err => this.failAlert(err),

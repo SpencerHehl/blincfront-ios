@@ -20,7 +20,10 @@ export class ThreadListPage implements OnInit{
     ngOnInit(){
         this.CurrentLocation = this.navParams.get('location');
         this.threadService.getLocationThreads(this.CurrentLocation._id).subscribe(
-            threads => this.LocThreads
+            threads => {
+                this.LocThreads = threads;
+                console.log(threads);
+            }
         );
     }
 

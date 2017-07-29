@@ -34,7 +34,7 @@ export class NearbyPage implements OnInit{
         this.locationService.checkLocation().subscribe(
             response => {
                 this.resolvedLocation = response;
-                this.failAlert(JSON.stringify(this.resolvedLocation));
+                this.confirmLocation();
             },
             err => this.failAlert(err)
         );
@@ -43,15 +43,15 @@ export class NearbyPage implements OnInit{
     confirmLocation(){
         let confirm = this.alertCtrl.create({
         title: 'Confirm Location',
-        message: 'Are you at ' + JSON.stringify(this.resolvedLocation) + '?',
+        message: 'Are you at ' + JSON.stringify(this.resolvedLocation.data.name) + '?',
         buttons: [
             {
             text: 'Yes - Check In!',
             handler: () => {
                 this.locationService.checkIn(this.resolvedLocation).subscribe(
-                response => {this.myLocation},
-                err => this.failAlert(err),
-                () => this.navCtrl.push(ThreadListPage, {location: this.myLocation})
+                    response => {this.myLocation = response},
+                    err => this.failAlert(err),
+                    () => this.navCtrl.push(ThreadListPage, {location: this.myLocation})
                 );
             }
             },

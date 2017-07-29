@@ -5,7 +5,6 @@ import { Observable } from 'rxjs/Rx';
 import { AuthService } from '../../../shared/services/auth.service';
 
 declare var google;
-declare var gapi;
 
 @Injectable()
 export class LocationService{
@@ -41,62 +40,27 @@ export class LocationService{
     }
 
     checkLocation(){
-        let myLocation;
-        /*this.geolocation.getCurrentPosition().then((resp) => {
-            myLocation = {
-                lat: resp.coords.latitude,
-                lng: resp.coords.longitude
-            };
-            console.log(myLocation);
-            let geocoder = new google.maps.Geocoder;
-            geocoder.geocode({'location': {lat: myLocation.lat, lng: myLocation.lng}}, function(result, status){
-                console.log(status);
-                if(status == 'OK'){
-                    this.placeId = result[0].place_id;
-                    console.log(result);
-                    return this.http.get('http://104.238.138.146:8080/location/resolve/' + this.placeId).map((response: Response) => {
-                        return response.json();
-                    }).catch(this.handleError);
-                }
-            });
-        });*/
-        /*return Observable.fromPromise(this.geolocation.getCurrentPosition())
-            .map((resp) => {
-                myLocation = {
-                    lat: resp.coords.latitude,
-                    lng: resp.coords.longitude
-                };
-                console.log(myLocation);
-                let geocoder = new google.maps.Geocoder;
-                geocoder.geocode({'location': {lat: myLocation.lat, lng: myLocation.lng}}, function(result, status){
-                    console.log(status);
-                    if(status == 'OK'){
-                        var placeId = result[0].place_id;
-                        console.log(result);
-                        return this.http.get('http://104.238.138.146:8080/location/resolve/' + placeId).map((response: Response) => {
-                            return response.json();
-                        }).catch(this.handleError);
-                    }
-                });
-            });*/
 
         return Observable.fromPromise(this.geolocation.getCurrentPosition())
             .map((resp) => {
-                myLocation = {
+                this.myLocation = {
                     lat: resp.coords.latitude,
-                    lng: resp.coords.longitude
+                    lng: resp.coords.longitude,
+                    placeId: "",
+                    name: ""
                 };
-                return myLocation
+                return this.myLocation
             })
             .flatMap((location) => {
                 return this.reverseGeo(location)
                     .map((placeid) => {
-                        console.log(placeid);
                         return placeid;
                     });
             }).flatMap((placeid) => {
-                return this.http.get('http://localhost:8080/location/resolve/' + placeid).map((response: Response) => {
-                    console.log(response);
+                return this.http.get('http://104.238.138.146:8080/location/resolve/' + placeid).map((response: Response) => {
+                    console.log(response.json());
+                    this.myLocation.name = response.json().data.name;
+                    this.myLocation.placeId = placeid;
                     return response.json();
                 })
             }).catch(this.handleError);
@@ -112,6 +76,7 @@ export class LocationService{
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
         return this.http.post('http://104.238.138.146:8080/location/checkin/new', this.myLocation, options).map((response: Response) => {
+            console.log(response.json());
             return response.json();  
         }).catch(this.handleError);
     }

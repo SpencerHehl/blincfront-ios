@@ -1,14 +1,14 @@
   <ion-card>
     <ion-item>
-      {{Thread.Title}}
-      <button float-right ion-button clear icon-left [color]="favoriteColor" (click)="FavoriteThread(Thread.ID)"><ion-icon name="star"></ion-icon>{{Thread.NumFavorites}} Favorites</button>
+      {{Thread.title}}
+      <button float-right ion-button clear icon-left [color]="favoriteColor" (click)="FavoriteThread(Thread.ID)"><ion-icon name="star"></ion-icon>{{Thread.numFavorites}} Favorites</button>
     </ion-item>
     <ion-row>
       <ion-col>
-        <button ion-button clear icon-left [color]="likeColor" (click)="LikeThread(Thread.ID)"><ion-icon name="thumbs-up"></ion-icon>{{Thread.NumLikes}} Likes</button>
+        <button ion-button clear icon-left [color]="likeColor" (click)="LikeThread(Thread.ID)"><ion-icon name="thumbs-up"></ion-icon>{{Thread.numLikes}} Likes</button>
       </ion-col>
       <ion-col>
-        <button ion-button clear icon-left color="dark" (click)="ViewThread(Thread)"><ion-icon name="text"></ion-icon>{{Thread.NumPosts}} Posts</button>
+        <button ion-button clear icon-left color="dark" (click)="ViewThread(Thread)"><ion-icon name="text"></ion-icon>{{Thread.numPosts}} Posts</button>
       </ion-col>
     </ion-row>
   </ion-card>
