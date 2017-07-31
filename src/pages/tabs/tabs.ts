@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 
-import { LocationsPage } from '../locations/mylocations/locations';
 import { HomePage } from '../home/home';
-import { NearbyPage } from '../locations/nearby/nearby.component';
+import { NearMePage } from '../posts/nearme/nearme.component';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -10,8 +9,7 @@ import { NearbyPage } from '../locations/nearby/nearby.component';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = LocationsPage;
-  tab3Root = NearbyPage;
+  tab2Root = NearMePage;
 
   constructor() {
 

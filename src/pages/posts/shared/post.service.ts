@@ -5,39 +5,59 @@ import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class PostService{
-    myLocation: {
-        lat: number,
-        lng: number
-    };
+    myLocation: any;
     
     constructor(private http: Http, private geolocation: Geolocation){}
 
-    getNearbyPosts(){
-        return Observable.fromPromise(this.geolocation.getCurrentPosition().then((resp) => {
-            this.myLocation.lat = resp.coords.latitude;
-            this.myLocation.lng = resp.coords.longitude;
-            return this.http.get('http://www.blincapp.com/post/nearme?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng).map((response: Response) => {
-                return response.json();
-            }).catch(this.handleError);
-        }).catch(this.handleError));
-    }
-    
-    getThreadPosts(ThreadID){
-        return this.http.get('http://www.blincapp.com/post/' + ThreadID).map((response: Response) => {
-            return response.json();
-        }).catch(this.handleError);  
+    getNearbyPostsDate(){
+        return Observable.fromPromise(this.geolocation.getCurrentPosition())
+            .map((resp) => {
+                this.myLocation = {
+                    lat: resp.coords.latitude,
+                    lng: resp.coords.longitude
+                }
+                return resp;
+            })
+            .flatMap((resp) => {
+                return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude)
+                    .map((resp) => {
+                        console.log(resp);
+                        return resp.json();
+                    })
+            })
+            .catch(this.handleError);
     }
 
-    createPost(Post){
+    getNearbyPostsLikes(){
+        return Observable.fromPromise(this.geolocation.getCurrentPosition())
+            .map((resp) => {
+                this.myLocation = {
+                    lat: resp.coords.latitude,
+                    lng: resp.coords.longitude
+                }
+                return resp;
+            })
+            .flatMap((resp) => {
+                return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude)
+                    .map((resp) => {
+                        console.log(resp);
+                        return resp.json();
+                    })
+            })
+            .catch(this.handleError);
+    }
+
+    postText(Post){
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
-
-        return this.http.post('http://www.blincapp.com/post/', Post, options).map((response: Response) => {
+        Post["location"] = this.myLocation;
+        console.log(Post);
+        return this.http.post('http://104.238.138.146:8080/post/text/', Post, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }
 
-    private handleError(error: Response){
-        return Observable.throw(error.statusText);
+    private handleError(error){
+        return Observable.throw(error);
     }
 }

@@ -9,6 +9,7 @@ export class PostCardComponent {
     @Output() viewThisPost = new EventEmitter();
     @Output() likeThisPost = new EventEmitter();
     likeColor = 'dark';
+    today: any;
 
     constructor(){}
 

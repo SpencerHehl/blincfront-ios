@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Near Me
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding style="background-color: #cbd3db">
+  <ion-refresher (ionRefresh)="reloadPosts($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull down to refresh" refreshingSpinner="circles" refreshingText="Reloading..."></ion-refresher-content>
+  </ion-refresher>
+  <ion-item>
+    <ion-label>Sort By:</ion-label>
+    <ion-select [(ngModel)]="postFilter" (ionChange)="onFilterChange()">
+      <ion-option value="date">Most Recent</ion-option>
+      <ion-option value="like">Top Posts</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-row>
+    <ion-col *ngFor="let post of nearbyPostsDate" [hidden]="postFilter != 'date'">
+      <post-card [Post]="post"></post-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col *ngFor="let post of nearbyPostsLikes" [hidden]="postFilter != 'like'">
+      <post-card [Post]="post"></post-card>
+    </ion-col>
+  </ion-row>
+  <p *ngIf="!nearbyPostsDate">Woah it is pretty lonely here. Looks like you are a pioneer in your area. Start posting and get the conversation started!</p>
+  <ion-fab right bottom>
+    <button ion-fab><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="postText()"><ion-icon name="text"></ion-icon></button>
+      <button ion-fab (click)="postMedia()"><ion-icon name="camera"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
