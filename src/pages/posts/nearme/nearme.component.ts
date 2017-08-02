@@ -29,8 +29,8 @@ export class NearMePage implements OnInit{
     }
 
     postText(){
-        let textModal = this.modalCtrl.create(PostFormModal);
-        textModal.present();
+        let postModal = this.modalCtrl.create(PostFormModal, {postType: 'text'});
+        postModal.present();
     }
 
     postPhoto(){
@@ -43,6 +43,8 @@ export class NearMePage implements OnInit{
 
         this.camera.getPicture(options).then((imageData) => {
             let base64Image = 'data:image/jpeg;base64,' + imageData;
+            let postModal = this.modalCtrl.create(PostFormModal, {postType: 'photo', image: base64Image});
+            postModal.present();
         }, (err) => {
             this.failAlert(err);
         });

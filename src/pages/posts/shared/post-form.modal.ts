@@ -14,7 +14,7 @@ export class PostFormModal {
         private viewCtrl: ViewController, public alertCtrl: AlertController){
             this.postType = this.navParams.get('postType');
             if(this.postType == 'photo'){
-                this.imageData = this.navParams.get('imageData');
+                this.imageData = this.navParams.get('image');
             }
         }
 
