@@ -96,6 +96,7 @@ export class PostService{
         let options = new RequestOptions({headers: headers});
         post["location"] = this.myLocation;
         post["imageData"] = image;
+        console.log(image);
         return this.http.post('http://104.238.138.146:8080/post/picture/', post, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
