@@ -7,16 +7,34 @@ import { PostService } from './post.service';
     templateUrl: 'post-form.modal.html'
 })
 export class PostFormModal {
-    constructor(private postService: PostService, private navParams: NavParams, private viewCtrl: ViewController, public alertCtrl: AlertController){}
+    imageData: any;
+    postType: any;
 
-    postComment(formValues){
+    constructor(private postService: PostService, private navParams: NavParams,
+        private viewCtrl: ViewController, public alertCtrl: AlertController){
+            this.postType = this.navParams.get('postType');
+            if(this.postType == 'photo'){
+                this.imageData = this.navParams.get('imageData');
+            }
+        }
+
+    submitPost(formValues){
         console.log(formValues);
-        this.postService.postText(formValues).subscribe(
-            response => {
-                this.viewCtrl.dismiss();
-            },
-            err => this.failAlert(err)
-        );
+        if(this.postType == 'text'){
+            this.postService.postText(formValues).subscribe(
+                response => {
+                    this.viewCtrl.dismiss();
+                },
+                err => this.failAlert(err)
+            );
+        }else{
+            this.postService.postPhoto(formValues, this.imageData).subscribe(
+                response => {
+                    this.viewCtrl.dismiss();
+                },
+                err => this.failAlert(err)
+            );
+        }
     }
 
     cancel(){

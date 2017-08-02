@@ -73,6 +73,7 @@ const cloudSettings: CloudSettings = {
     Geolocation,
     Network,
     AuthService,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

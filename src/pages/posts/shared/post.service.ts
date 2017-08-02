@@ -6,8 +6,13 @@ import { Observable } from 'rxjs/Rx';
 @Injectable()
 export class PostService{
     myLocation: any;
+    datePage: number;
+    likesPage: number;
     
-    constructor(private http: Http, private geolocation: Geolocation){}
+    constructor(private http: Http, private geolocation: Geolocation){
+        this.datePage = 1;
+        this.likesPage = 1;
+    }
 
     getNearbyPostsDate(){
         return Observable.fromPromise(this.geolocation.getCurrentPosition())
@@ -19,9 +24,8 @@ export class PostService{
                 return resp;
             })
             .flatMap((resp) => {
-                return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude)
+                return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0')
                     .map((resp) => {
-                        console.log(resp);
                         return resp.json();
                     })
             })
@@ -38,21 +42,61 @@ export class PostService{
                 return resp;
             })
             .flatMap((resp) => {
-                return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude)
+                return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0')
                     .map((resp) => {
-                        console.log(resp);
                         return resp.json();
                     })
             })
             .catch(this.handleError);
     }
 
-    postText(Post){
+    loadDate(){
+        return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.datePage)
+            .map((resp) => {
+                this.datePage += 1;
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
+    loadLikes(){
+        return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.likesPage)
+            .map((resp) => {
+                this.likesPage += 1;
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
+    updateLikes(postId, numLikes){
         let headers = new Headers({'Content-type': 'application/json'});
         let options = new RequestOptions({headers: headers});
-        Post["location"] = this.myLocation;
-        console.log(Post);
-        return this.http.post('http://104.238.138.146:8080/post/text/', Post, options).map((response: Response) => {
+        var body = {
+            id: postId,
+            numLikes: numLikes
+        }
+        return this.http.put('http://104.238.138.146:8080/post/like', body, options)
+            .map((resp) => {
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
+    postText(post){
+        let headers = new Headers({'Content-type': 'application/json'});
+        let options = new RequestOptions({headers: headers});
+        post["location"] = this.myLocation;
+        return this.http.post('http://104.238.138.146:8080/post/text/', post, options).map((response: Response) => {
+            return response.json();
+        }).catch(this.handleError);
+    }
+
+    postPhoto(post, image){
+        let headers = new Headers({'Content-type': 'application/json'});
+        let options = new RequestOptions({headers: headers});
+        post["location"] = this.myLocation;
+        post["imageData"] = image;
+        return this.http.post('http://104.238.138.146:8080/post/text/', post, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }

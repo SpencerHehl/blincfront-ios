@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
+import { PostService } from '../../../pages/posts/shared/post.service';
+
 @Component({
     selector: 'post-card',
     templateUrl: 'post.card.html'
@@ -7,22 +9,22 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class PostCardComponent {
     @Input() Post: any;
     @Output() viewThisPost = new EventEmitter();
-    @Output() likeThisPost = new EventEmitter();
     likeColor = 'dark';
-    today: any;
 
-    constructor(){}
+    constructor(private postService: PostService){}
 
     LikePost(PostID) {
-        this.likeThisPost.emit(PostID);
         this.Post.isLiked = !this.Post.isLiked;
         if(this.Post.isLiked){
             this.likeColor = 'primary';
-            this.Post.NumLikes += 1;
+            this.Post.numLikes += 1;
         }else{
             this.likeColor = 'dark';
-            this.Post.NumLikes -= 1;
+            this.Post.numLikes -= 1;
         }
+        this.postService.updateLikes(PostID, this.Post.numLikes).subscribe(
+            response => {}
+        )
     }
 
     ViewComments(Post) {

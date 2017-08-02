@@ -5,17 +5,23 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content>
+<ion-content padding>
   <div>
-    <form autocomplete="off" (ngSubmit)="postComment(createPostForm.value)" #createPostForm="ngForm">
+    <img *ngIf="postType == 'photo'" [src]="imageData">
+  </div>
+  <div>
+    <form autocomplete="off" (ngSubmit)="submitPost(createPostForm.value)" #createPostForm="ngForm">
       <ion-list>
-        <ion-item>
+        <ion-item *ngIf="postType == 'photo'">
+          <ion-textarea placeholder="Caption" name="caption" (ngModel)="caption"></ion-textarea>
+        </ion-item>
+        <ion-item *ngIf="postType == 'text'">
           <ion-textarea placeholder="Comment" name="comment" (ngModel)="comment"></ion-textarea>
         </ion-item>
       </ion-list>
       <div align-center>
-        <button type="submit" full ion-button color="secondary">Create</button>
-        <button type="button" full ion-button color="danger" (click)="cancel()">Cancel</button>
+        <button type="submit" block ion-button color="secondary">Create</button>
+        <button type="button" block ion-button color="danger" (click)="cancel()">Cancel</button>
       </div>
     </form>
   </div>
