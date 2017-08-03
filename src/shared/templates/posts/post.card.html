@@ -8,9 +8,9 @@
       </ion-note>
       <h2>spencer hehl</h2>
     </ion-item>
-    <ion-card-content [ngSwitch]="Post.content.type">
-      <img *ngSwitchCase="'media'" [src]="Post?.content.body">
-      <p *ngSwitchDefault>{{Post.content.body}}</p>
+    <ion-card-content>
+      <img *ngIf="Post.content.contentType == 'photo'" [src]="Post?.content.img">
+      <p>{{Post.content.body}}</p>
     </ion-card-content>
     <ion-row>
       <ion-col>
