@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Injectable()
 export class PostService{
@@ -9,7 +10,8 @@ export class PostService{
     datePage: number;
     likesPage: number;
     
-    constructor(private http: Http, private geolocation: Geolocation){
+    constructor(private http: Http, private geolocation: Geolocation,
+        private authService: AuthService){
         this.datePage = 1;
         this.likesPage = 1;
     }
@@ -70,6 +72,8 @@ export class PostService{
 
     updateLikes(postId, numLikes){
         let headers = new Headers({'Content-type': 'application/json'});
+        var token = this.authService.authToken;
+        headers.append('X-Auth-Token', token);
         let options = new RequestOptions({headers: headers});
         var body = {
             id: postId,
@@ -84,6 +88,8 @@ export class PostService{
 
     postText(post){
         let headers = new Headers({'Content-type': 'application/json'});
+        var token = this.authService.authToken;
+        headers.append('X-Auth-Token', token);
         let options = new RequestOptions({headers: headers});
         post["location"] = this.myLocation;
         return this.http.post('http://104.238.138.146:8080/post/text/', post, options).map((response: Response) => {
@@ -93,6 +99,8 @@ export class PostService{
 
     postPhoto(post, image){
         let headers = new Headers({'Content-type': 'application/json'});
+        var token = this.authService.authToken;
+        headers.append('X-Auth-Token', token);
         let options = new RequestOptions({headers: headers});
         post["location"] = this.myLocation;
         post["imageData"] = image;
