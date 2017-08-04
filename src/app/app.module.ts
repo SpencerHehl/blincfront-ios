@@ -10,7 +10,7 @@ import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { NearMePage } from '../pages/posts/nearme/nearme.component';
 import { PostFormModal } from '../pages/posts/shared/post-form.modal';
-import { LoginModal } from '../shared/modals/login.modal';
+import { LoginPage } from '../pages/login/login.component';
 
 import { PostCardComponent } from '../shared/templates/posts/post.card'
 
@@ -47,7 +47,7 @@ const cloudSettings: CloudSettings = {
     NearMePage,
     PostCardComponent,
     PostFormModal,
-    LoginModal,
+    LoginPage,
     DateAgePipe
   ],
   imports: [
@@ -64,7 +64,7 @@ const cloudSettings: CloudSettings = {
     TabsPage,
     NearMePage,
     PostFormModal,
-    LoginModal
+    LoginPage
   ],
   providers: [
     PostService,
