@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{authService.currentUser?.full_name}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="settings()" icon-right><ion-icon name="settings"></ion-icon>Settings</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding style="background-color: #cbd3db">
+  <ion-row>
+    <ion-col *ngFor="let post of myPosts">
+      <post-card [Post]="post"></post-card>
+    </ion-col>
+  </ion-row>
+  <button ion-button block (click)="loadMore()">Load more posts</button>
+  <ion-fab right bottom>
+    <button ion-fab><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab (click)="postText()"><ion-icon name="text"></ion-icon></button>
+      <button ion-fab (click)="postPhoto()"><ion-icon name="camera"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

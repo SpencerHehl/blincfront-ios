@@ -9,17 +9,14 @@ import { PostService } from '../../../pages/posts/shared/post.service';
 export class PostCardComponent {
     @Input() Post: any;
     @Output() viewThisPost = new EventEmitter();
-    likeColor = 'dark';
 
     constructor(private postService: PostService){}
 
     LikePost(PostID) {
-        this.Post.isLiked = !this.Post.isLiked;
-        if(this.Post.isLiked){
-            this.likeColor = 'primary';
+        this.Post.likedByUser = !this.Post.likedByUser;
+        if(this.Post.likedByUser){
             this.Post.numLikes += 1;
         }else{
-            this.likeColor = 'dark';
             this.Post.numLikes -= 1;
         }
         this.postService.updateLikes(PostID, this.Post.numLikes).subscribe(

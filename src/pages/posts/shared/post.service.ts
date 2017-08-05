@@ -26,7 +26,7 @@ export class PostService{
                 return resp;
             })
             .flatMap((resp) => {
-                var token = this.authService.authToken;
+                let token = this.authService.authToken;
                 let headers = new Headers({'Authorization': token});
                 let options = new RequestOptions({headers: headers});
                 return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0', options)
@@ -47,7 +47,7 @@ export class PostService{
                 return resp;
             })
             .flatMap((resp) => {
-                var token = this.authService.authToken;
+                let token = this.authService.authToken;
                 let headers = new Headers({'Authorization': token});
                 let options = new RequestOptions({headers: headers});
                 return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0', options)
@@ -59,7 +59,7 @@ export class PostService{
     }
 
     loadDate(){
-        var token = this.authService.authToken;
+        let token = this.authService.authToken;
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
         return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.datePage, options)
@@ -71,7 +71,7 @@ export class PostService{
     }
 
     loadLikes(){
-        var token = this.authService.authToken;
+        let token = this.authService.authToken;
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
         return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.likesPage, options)
@@ -84,10 +84,10 @@ export class PostService{
 
     updateLikes(postId, numLikes){
         let headers = new Headers({'Content-type': 'application/json'});
-        var token = this.authService.authToken;
+        let token = this.authService.authToken;
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
-        var body = {
+        let body = {
             id: postId,
             numLikes: numLikes
         }
@@ -100,7 +100,7 @@ export class PostService{
 
     postText(post){
         let headers = new Headers({'Content-type': 'application/json'});
-        var token = this.authService.authToken;
+        let token = this.authService.authToken;
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
         post["location"] = this.myLocation;
@@ -111,7 +111,7 @@ export class PostService{
 
     postPhoto(post, image){
         let headers = new Headers({'Content-type': 'application/json'});
-        var token = this.authService.authToken;
+        let token = this.authService.authToken;
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
         post["location"] = this.myLocation;

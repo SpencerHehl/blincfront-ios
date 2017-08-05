@@ -35,7 +35,7 @@ export class NearMePage implements OnInit{
 
     postPhoto(){
         const options: CameraOptions = {
-            quality: 100,
+            quality: 50,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE
@@ -54,14 +54,18 @@ export class NearMePage implements OnInit{
         if(this.postFilter == 'date'){
             this.postService.loadDate().subscribe(
                 response => {
-                    this.nearbyPostsDate.push(response);
+                    if(response.length > 0){
+                        this.nearbyPostsDate.push(response);
+                    }
                 },
                 err => this.failAlert(err)
             )
         }else{
             this.postService.loadLikes().subscribe(
                 response => {
-                    this.nearbyPostsLikes.push(response);
+                    if(response.length > 0){
+                        this.nearbyPostsLikes.push(response);
+                    }
                 },
                 err => this.failAlert(err)
             )

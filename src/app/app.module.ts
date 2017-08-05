@@ -11,6 +11,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { NearMePage } from '../pages/posts/nearme/nearme.component';
 import { PostFormModal } from '../pages/posts/shared/post-form.modal';
 import { LoginPage } from '../pages/login/login.component';
+import { MyFeedPage } from '../pages/profile/myfeed/myfeed.component';
 
 import { PostCardComponent } from '../shared/templates/posts/post.card'
 
@@ -22,6 +23,7 @@ import { Camera } from '@ionic-native/camera';
 
 import { PostService } from '../pages/posts/shared/post.service';
 import { AuthService } from '../shared/services/auth.service';
+import { ProfileService } from '../pages/profile/shared/profile.service';
 import { DateAgePipe } from '../shared/pipes/date.pipe';
 
 const cloudSettings: CloudSettings = {
@@ -48,7 +50,8 @@ const cloudSettings: CloudSettings = {
     PostCardComponent,
     PostFormModal,
     LoginPage,
-    DateAgePipe
+    DateAgePipe,
+    MyFeedPage
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,8 @@ const cloudSettings: CloudSettings = {
     TabsPage,
     NearMePage,
     PostFormModal,
-    LoginPage
+    LoginPage,
+    MyFeedPage
   ],
   providers: [
     PostService,
@@ -73,6 +77,7 @@ const cloudSettings: CloudSettings = {
     Geolocation,
     Network,
     AuthService,
+    ProfileService,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
