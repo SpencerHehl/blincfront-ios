@@ -13,23 +13,25 @@ export class LoginPage {
         private NavParams: NavParams, private user: User, public navController: NavController,
         private facebookAuth: FacebookAuth, private googleAuth: GoogleAuth){}
 
-    /*ionViewWillLoad(){
+    ionViewWillLoad(){
         if(this.facebookAuth.getToken()){
-            this.authService.authMethod = "facebook";
-            this.authService.currentUser = this.user.social.facebook.data;
-            this.authService.login().subscribe(
-                response => this.navController.setRoot(TabsPage),
-                err => this.failAlert(err)
-            )
-        }else if(this.googleAuth.getToken()){
-            this.authService.authMethod = "google";
-            this.authService.currentUser = this.user.social.google.data;
-            this.authService.login().subscribe(
-                response => this.navController.setRoot(TabsPage),
-                err => this.failAlert(err)
-            )
+            if(this.user.social.facebook){
+                this.authService.authMethod = "facebook";
+                this.authService.currentUser = this.user.social.facebook.data;
+                this.authService.login().subscribe(
+                    response => this.navController.setRoot(TabsPage),
+                    err => this.failAlert(err)
+                )
+            }else if(this.user.social.google){
+                this.authService.authMethod = "google";
+                this.authService.currentUser = this.user.social.google.data;
+                this.authService.login().subscribe(
+                    response => this.navController.setRoot(TabsPage),
+                    err => this.failAlert(err)
+                )
+            }
         }
-    }*/
+    }
 
     facebookLogin(){
         this.facebookAuth.login().then((result) =>{
@@ -39,9 +41,8 @@ export class LoginPage {
             if(result.signup){
                 this.authService.authToken = result.token;
                 this.authService.newUser(this.user.social.facebook.data).subscribe(
-                    response => this.failAlert(response),
-                    err => this.failAlert(err),
-                    () => this.navController.setRoot(TabsPage)
+                    response => this.navController.setRoot(TabsPage),
+                    err => this.failAlert(err)
                 );
             }else{
                 this.authService.login().subscribe(
@@ -66,12 +67,13 @@ export class LoginPage {
             console.log(this.user.social.google.data);
             if(result.signup){
                 this.authService.authToken = result.token;
+                console.log("set token");
                 this.authService.newUser(this.user.social.google.data).subscribe(
-                    response => this.failAlert(response),
-                    err => this.failAlert(err),
-                    () => this.navController.setRoot(TabsPage)
+                    response => this.navController.setRoot(TabsPage),
+                    err => this.failAlert(err)
                 );
             }else{
+                console.log("logging in");
                 this.authService.login().subscribe(
                     response => this.navController.setRoot(TabsPage),
                     err => this.failAlert(err)

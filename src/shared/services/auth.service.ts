@@ -16,6 +16,7 @@ export class AuthService {
         let newUser = passedUser;
         newUser.ionic_id = this.user.id;
         let headers = new Headers({'Content-type': 'application/json'});
+        headers.append('Authorization', this.authToken);
         let options = new RequestOptions({headers: headers});
         return this.http.post('http://104.238.138.146:8080/user/newuser', newUser, options).map((response: Response) => {
             return JSON.stringify(response.json());
@@ -35,10 +36,13 @@ export class AuthService {
             ionicId: ionicId
         };
         let headers = new Headers({'Content-type': 'application/json'});
-        headers.append('X-Auth-Token', this.authToken);
+        headers.append('Authorization', this.authToken);
         let options = new RequestOptions({headers: headers});
+        console.log(options);
+        console.log(body);
         return this.http.post('http://104.238.138.146:8080/user/login', body, options)
             .map((response: Response) => {
+                console.log(response);
                 return response.json();
             })
             .catch(this.handleError);
@@ -53,7 +57,7 @@ export class AuthService {
             token = this.googleAuth.getToken();
         }
         let headers = new Headers({'Content-type': 'application/json'});
-        headers.append('X-Auth-Token', token);
+        headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
         return this.http.post('http://104.238.138.146:8080/user/logout', body, options)
         .map((response) =>{

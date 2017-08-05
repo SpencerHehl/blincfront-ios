@@ -26,7 +26,10 @@ export class PostService{
                 return resp;
             })
             .flatMap((resp) => {
-                return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0')
+                var token = this.authService.authToken;
+                let headers = new Headers({'Authorization': token});
+                let options = new RequestOptions({headers: headers});
+                return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0', options)
                     .map((resp) => {
                         return resp.json();
                     })
@@ -44,7 +47,10 @@ export class PostService{
                 return resp;
             })
             .flatMap((resp) => {
-                return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0')
+                var token = this.authService.authToken;
+                let headers = new Headers({'Authorization': token});
+                let options = new RequestOptions({headers: headers});
+                return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0', options)
                     .map((resp) => {
                         return resp.json();
                     })
@@ -53,7 +59,10 @@ export class PostService{
     }
 
     loadDate(){
-        return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.datePage)
+        var token = this.authService.authToken;
+        let headers = new Headers({'Authorization': token});
+        let options = new RequestOptions({headers: headers});
+        return this.http.get('http://104.238.138.146:8080/post/nearme/date?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.datePage, options)
             .map((resp) => {
                 this.datePage += 1;
                 return resp.json();
@@ -62,7 +71,10 @@ export class PostService{
     }
 
     loadLikes(){
-        return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.likesPage)
+        var token = this.authService.authToken;
+        let headers = new Headers({'Authorization': token});
+        let options = new RequestOptions({headers: headers});
+        return this.http.get('http://104.238.138.146:8080/post/nearme/likes?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.likesPage, options)
             .map((resp) => {
                 this.likesPage += 1;
                 return resp.json();
@@ -73,7 +85,7 @@ export class PostService{
     updateLikes(postId, numLikes){
         let headers = new Headers({'Content-type': 'application/json'});
         var token = this.authService.authToken;
-        headers.append('X-Auth-Token', token);
+        headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
         var body = {
             id: postId,
@@ -89,7 +101,7 @@ export class PostService{
     postText(post){
         let headers = new Headers({'Content-type': 'application/json'});
         var token = this.authService.authToken;
-        headers.append('X-Auth-Token', token);
+        headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
         post["location"] = this.myLocation;
         return this.http.post('http://104.238.138.146:8080/post/text/', post, options).map((response: Response) => {
@@ -100,7 +112,7 @@ export class PostService{
     postPhoto(post, image){
         let headers = new Headers({'Content-type': 'application/json'});
         var token = this.authService.authToken;
-        headers.append('X-Auth-Token', token);
+        headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
         post["location"] = this.myLocation;
         post["imageData"] = image;
