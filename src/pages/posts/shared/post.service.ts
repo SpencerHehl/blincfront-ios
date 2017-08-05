@@ -82,16 +82,30 @@ export class PostService{
             .catch(this.handleError);
     }
 
-    updateLikes(postId, numLikes){
+    likePost(postId){
         let headers = new Headers({'Content-type': 'application/json'});
         let token = this.authService.authToken;
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
         let body = {
-            id: postId,
-            numLikes: numLikes
+            id: postId
         }
         return this.http.put('http://104.238.138.146:8080/post/like', body, options)
+            .map((resp) => {
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
+    unlikePost(postId){
+        let headers = new Headers({'Content-type': 'application/json'});
+        let token = this.authService.authToken;
+        headers.append('Authorization', token);
+        let options = new RequestOptions({headers: headers});
+        let body = {
+            id: postId
+        }
+        return this.http.put('http://104.238.138.146:8080/post/unlike', body, options)
             .map((resp) => {
                 return resp.json();
             })
