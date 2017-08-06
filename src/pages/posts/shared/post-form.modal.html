@@ -12,12 +12,22 @@
   <div>
     <form autocomplete="off" (ngSubmit)="submitPost(createPostForm.value)" #createPostForm="ngForm">
       <ion-list>
+        <ion-item>
+          <ion-input type="text" placeholder="Title" name="title" (ngModel)="title"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" placeholder="Location" name="location" (ngModel)="location"></ion-input>
+        </ion-item> 
         <ion-item *ngIf="postType == 'photo'">
           <ion-textarea placeholder="Caption" name="caption" (ngModel)="caption"></ion-textarea>
         </ion-item>
         <ion-item *ngIf="postType == 'text'">
           <ion-textarea placeholder="Comment" name="comment" (ngModel)="comment"></ion-textarea>
         </ion-item>
+        <ion-item>
+          <ion-label>Mapable</ion-label>
+          <ion-toggle checked (ngModel)="mapable"></ion-toggle>
+        </ion-item> 
       </ion-list>
       <div align-center>
         <button type="submit" block ion-button color="secondary">Create</button>

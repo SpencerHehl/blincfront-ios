@@ -16,6 +16,17 @@ export class PostService{
         this.likesPage = 1;
     }
 
+    getMyLocation(){
+        return Observable.fromPromise(this.geolocation.getCurrentPosition())
+            .map((resp) => {
+                this.myLocation = {
+                    lat: resp.coords.latitude,
+                    lng: resp.coords.longitude
+                }
+                return this.myLocation;
+            }).catch(this.handleError);
+    }
+
     getNearbyPostsDate(){
         return Observable.fromPromise(this.geolocation.getCurrentPosition())
             .map((resp) => {
@@ -117,7 +128,7 @@ export class PostService{
         let token = this.authService.authToken;
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
-        post["location"] = this.myLocation;
+        post["geolocation"] = this.myLocation;
         return this.http.post('http://104.238.138.146:8080/post/text/', post, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
@@ -128,12 +139,34 @@ export class PostService{
         let token = this.authService.authToken;
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
-        post["location"] = this.myLocation;
+        post["geolocation"] = this.myLocation;
         post["imageData"] = image;
         console.log(image);
         return this.http.post('http://104.238.138.146:8080/post/picture/', post, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
+    }
+
+    getMapMarkers(distance, location){
+        let token = this.authService.authToken;
+        let headers = new Headers({'Authorization': token});
+        let options = new RequestOptions({headers: headers});
+        return this.http.get('http://104.238.138.146:8080/post/mapmarkers?distance=' + distance + '&lat=' + location.lat+ '&lng=' + location.lng, options)
+            .map((resp) => {
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
+    getMapPosts(distance, location){
+        let token = this.authService.authToken;
+        let headers = new Headers({'Authorization': token});
+        let options = new RequestOptions({headers: headers});
+        return this.http.get('http://104.238.138.146:8080/post/mapposts?distance=' + distance + '&lat=' + location.lat+ '&lng=' + location.lng, options)
+            .map((resp) => {
+                return resp.json();
+            })
+            .catch(this.handleError);    
     }
 
     private handleError(error){

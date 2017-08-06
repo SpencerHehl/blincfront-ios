@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      List View
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-row>
+        <ion-col *ngFor="let post of mapPosts">
+            <post-card [Post]="post"></post-card>
+        </ion-col>
+    </ion-row>
+</ion-content>

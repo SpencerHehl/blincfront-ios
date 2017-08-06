@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Map Search
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewPosts()" icon-right>View Posts</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <div id="map"></div >
+    <ion-row [hidden]="viewType == map">
+        <ion-col *ngFor="let post of mapPosts">
+            <post-card [Post]="post"></post-card>
+        </ion-col>
+    </ion-row>
+</ion-content>

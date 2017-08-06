@@ -12,6 +12,8 @@ import { NearMePage } from '../pages/posts/nearme/nearme.component';
 import { PostFormModal } from '../pages/posts/shared/post-form.modal';
 import { LoginPage } from '../pages/login/login.component';
 import { MyFeedPage } from '../pages/profile/myfeed/myfeed.component';
+import { MapViewPage } from '../pages/posts/mapview/mapview.component';
+import { ListViewPage } from '../pages/posts/listview/listview.component';
 
 import { PostCardComponent } from '../shared/templates/posts/post.card'
 
@@ -51,7 +53,9 @@ const cloudSettings: CloudSettings = {
     PostFormModal,
     LoginPage,
     DateAgePipe,
-    MyFeedPage
+    MyFeedPage,
+    MapViewPage,
+    ListViewPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +72,9 @@ const cloudSettings: CloudSettings = {
     NearMePage,
     PostFormModal,
     LoginPage,
-    MyFeedPage
+    MyFeedPage,
+    MapViewPage,
+    ListViewPage
   ],
   providers: [
     PostService,
