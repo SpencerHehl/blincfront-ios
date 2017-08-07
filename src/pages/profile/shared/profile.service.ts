@@ -16,7 +16,7 @@ export class ProfileService{
         console.log(token);
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
-        return this.http.get('http://104.238.138.146:8080/post/myposts?page=' + this.page, options)
+        return this.http.get('http://blincapp.com/post/myposts?page=' + this.page, options)
             .map((resp) => {
                 this.page += 1;
                 return resp.json();
