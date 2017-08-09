@@ -1,0 +1,26 @@
+<ion-card>
+    <ion-item>
+        <ion-avatar item-start>
+            <img [src]="Comment.commenter?.profilePicture">
+        </ion-avatar>
+        
+        <h2>{{Comment.commenter?.fullName}}</h2>
+    </ion-item>
+    <ion-card-content>
+        <img *ngIf="Comment.content.contentType == 'photo'" [src]="Comment.content.img">
+        <p>{{Comment.content.body}}</p>
+    </ion-card-content>
+    <ion-row>
+        <ion-col>
+            <button ion-button icon-lef clear small (click)="likeComment(Comment._id)" [color]="likeColor">
+                <ion-icon name="thumbs-up"></ion-icon>
+                <div>{{Comment.numLikes}} Likes</div>
+            </button>
+        </ion-col>
+        <ion-col>
+            <ion-note>
+                {{Comment.createdDate | dateAge}}
+            </ion-note>
+        </ion-col>
+    </ion-row>
+</ion-card>

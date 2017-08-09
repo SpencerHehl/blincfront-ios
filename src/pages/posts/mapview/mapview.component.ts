@@ -32,6 +32,8 @@ export class MapViewPage{
         );
     }
 
+    
+
     initMap(){
         this.map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
@@ -39,14 +41,13 @@ export class MapViewPage{
           disableDefaultUI: true
         });
         this.updateMarkers(15, this.myLocation);
-        this.map.addListener('bounds_changed', this.mapChangedListener(), {passive: true});
-    }
-
-    mapChangedListener(){
-        var newZoom = this.map.getZoom();
-        var newCenter = this.map.getCenter();
-        var centerLatLng = {'lat': newCenter.lat(), 'lng': newCenter.lng()};
-        this.updateMarkers(newZoom, centerLatLng);
+        var self = this;
+        this.map.addListener('bounds_changed', function(){
+            var newZoom = self.map.getZoom();
+            var newCenter = self.map.getCenter();
+            var centerLatLng = {'lat': newCenter.lat(), 'lng': newCenter.lng()};
+            self.updateMarkers(newZoom, centerLatLng);
+        }, {passive: true});
     }
 
     updateMarkers(zoom, location){
@@ -58,7 +59,6 @@ export class MapViewPage{
                         lat: post.geolocation[1],
                         lng: post.geolocation[0]
                     }
-                    console.log(postLocation);
                     return new google.maps.Marker({
                         position: postLocation,
                         map: this.map,

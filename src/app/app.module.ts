@@ -14,8 +14,10 @@ import { LoginPage } from '../pages/login/login.component';
 import { MyFeedPage } from '../pages/profile/myfeed/myfeed.component';
 import { MapViewPage } from '../pages/posts/mapview/mapview.component';
 import { ListViewPage } from '../pages/posts/listview/listview.component';
+import { CommentPage } from '../pages/comments/comment.component';
 
 import { PostCardComponent } from '../shared/templates/posts/post.card'
+import { CommentCardComponent } from '../shared/templates/comments/comment.card';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,6 +28,8 @@ import { Camera } from '@ionic-native/camera';
 import { PostService } from '../pages/posts/shared/post.service';
 import { AuthService } from '../shared/services/auth.service';
 import { ProfileService } from '../pages/profile/shared/profile.service';
+import { CommentService } from '../pages/comments/shared/comment.service';
+import { MediaService } from '../shared/services/media.service';
 import { DateAgePipe } from '../shared/pipes/date.pipe';
 
 const cloudSettings: CloudSettings = {
@@ -50,12 +54,14 @@ const cloudSettings: CloudSettings = {
     TabsPage,
     NearMePage,
     PostCardComponent,
+    CommentCardComponent,
     PostFormModal,
     LoginPage,
     DateAgePipe,
     MyFeedPage,
     MapViewPage,
-    ListViewPage
+    ListViewPage,
+    CommentPage
   ],
   imports: [
     BrowserModule,
@@ -74,7 +80,8 @@ const cloudSettings: CloudSettings = {
     LoginPage,
     MyFeedPage,
     MapViewPage,
-    ListViewPage
+    ListViewPage,
+    CommentPage
   ],
   providers: [
     PostService,
@@ -84,6 +91,8 @@ const cloudSettings: CloudSettings = {
     Network,
     AuthService,
     ProfileService,
+    CommentService,
+    MediaService,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

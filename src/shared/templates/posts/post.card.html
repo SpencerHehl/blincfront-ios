@@ -14,13 +14,13 @@
     </ion-card-content>
     <ion-row>
       <ion-col>
-        <button ion-button icon-lef clear small (click)="LikePost(Post._id)" [color]="likeColor">
+        <button ion-button icon-lef clear small (click)="likePost(Post._id)" [color]="likeColor">
           <ion-icon name="thumbs-up"></ion-icon>
           <div>{{Post.numLikes}} Likes</div>
         </button>
       </ion-col>
       <ion-col>
-        <button ion-button icon-left clear small (click)="ViewComments(Post)" color="dark">
+        <button ion-button icon-left clear small (click)="viewComments(Post)" color="dark">
           <ion-icon name="text"></ion-icon>
           <div>{{Post.numComments}} Comments</div>
         </button>

@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Comments
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <post-card [Post]="post"></post-card>
+    <ion-row>
+        <ion-col *ngFor="let comment of postComments">
+            <comment-card [Comment]="comment"></comment-card>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-card>
+            <ion-item>
+                <ion-avatar item-start>
+                    <img [src]="post.poster?.profilePicture">
+                </ion-avatar>
+            </ion-item>
+            <ion-card-content>
+                <img *ngIf="newCommentImg && newCommentImg != ''" [src]="newCommentImg">
+                <form autocomplete="off" (ngSubmit)="submitComment(createCommentForm.value); createCommentForm.reset();" #createCommentForm="ngForm">
+                    <ion-item>
+                        <ion-input type="text" placeholder="Comment.." name="comment" (ngModel)="comment"></ion-input>
+                        <ion-buttons item-end>
+                            <button ion-button (click)="takePhoto()"><ion-icon name="camera"></ion-icon></button>
+                            <button ion-button type="submit"><ion-icon name="send"></ion-icon></button>
+                        </ion-buttons>
+                    </ion-item>
+                </form>
+            </ion-card-content>
+        </ion-card>
+    </ion-row>
+</ion-content>
