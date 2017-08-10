@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController, AlertController } from 'ionic-angular';
 
-import { PostService } from './post.service';
+import { PostService } from '../services/post.service';
 
 @Component({
     templateUrl: 'post-form.modal.html'
@@ -23,14 +23,14 @@ export class PostFormModal {
         if(this.postType == 'text'){
             this.postService.postText(formValues).subscribe(
                 response => {
-                    this.viewCtrl.dismiss();
+                    this.viewCtrl.dismiss(response);
                 },
                 err => this.failAlert(err)
             );
         }else{
             this.postService.postPhoto(formValues, this.imageData).subscribe(
                 response => {
-                    this.viewCtrl.dismiss();
+                    this.viewCtrl.dismiss(response);
                 },
                 err => this.failAlert(err)
             );

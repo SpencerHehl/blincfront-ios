@@ -11,14 +11,56 @@ export class ProfileService{
         this.page = 0;
     }
 
-    getMyPosts(){
+    getProfilePosts(profileId){
         let token = this.authService.authToken;
         console.log(token);
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
-        return this.http.get('http://104.238.138.146:8081/post/myposts?page=' + this.page, options)
+        return this.http.get('http://104.238.138.146:8081/profile/profileposts?page=' + this.page + '&user=' + profileId, options)
             .map((resp) => {
                 this.page += 1;
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
+    getProfile(profileId){
+        let token = this.authService.authToken;
+        console.log(token);
+        let headers = new Headers({'Authorization': token});
+        let options = new RequestOptions({headers: headers});
+        return this.http.get('http://104.238.138.146:8081/profile/' + profileId, options)
+            .map((resp) => {
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
+    follow(profileId){
+        let headers = new Headers({'Content-type': 'application/json'});
+        let token = this.authService.authToken;
+        headers.append('Authorization', token);
+        let options = new RequestOptions({headers: headers});
+        let body = {
+            id: profileId
+        }
+        return this.http.put('http://104.238.138.146:8081/profile/follow', body, options)
+            .map((resp) => {
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
+    unfollow(profileId){
+        let headers = new Headers({'Content-type': 'application/json'});
+        let token = this.authService.authToken;
+        headers.append('Authorization', token);
+        let options = new RequestOptions({headers: headers});
+        let body = {
+            id: profileId
+        }
+        return this.http.put('http://104.238.138.146:8081/profile/unfollow', body, options)
+            .map((resp) => {
                 return resp.json();
             })
             .catch(this.handleError);

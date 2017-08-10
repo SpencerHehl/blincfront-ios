@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
 import { CommentService } from '../../../pages/comments/shared/comment.service';
+import { ProfilePage } from '../../../pages/profile/profile.component';
 
 @Component({
     selector: 'comment-card',
@@ -10,7 +12,7 @@ export class CommentCardComponent{
     @Input() Comment: any;
     likeColor: string;
 
-    constructor(private commentService: CommentService){}
+    constructor(private commentService: CommentService, private navCtrl: NavController){}
 
     ngOnInit(){
         if(this.Comment.likedByUser){
@@ -35,5 +37,9 @@ export class CommentCardComponent{
                 response => {}
             )
         }
+    }
+
+    viewProfile(){
+        this.navCtrl.push(ProfilePage, {user: this.Comment.commenter});
     }
 }

@@ -1,15 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{authService.currentUser?.full_name}}</ion-title>
+    <ion-title>{{user?.fullName}}</ion-title>
     <ion-buttons end>
-      <button ion-button (click)="settings()" icon-right><ion-icon name="settings"></ion-icon>Settings</button>
+      <button *ngIf="user?._id == authService.mongoUser._id" ion-button (click)="settings()" icon-right><ion-icon name="settings"></ion-icon>Settings</button>
+      <button *ngIf="user?._id != authService.mongoUser._id" ion-button (click)="followUser()" icon-right><ion-icon name="star"></ion-icon>{{followText}}</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding style="background-color: #cbd3db">
   <ion-row>
-    <ion-col *ngFor="let post of myPosts">
+    <ion-col *ngFor="let post of user?.myPosts">
       <post-card [Post]="post"></post-card>
     </ion-col>
   </ion-row>

@@ -6,7 +6,7 @@
       <ion-note float-right>
         {{Post.createdDate | dateAge}}
       </ion-note>
-      <h2>{{Post.poster?.fullName}}</h2>
+      <button ion-button clear (click)="viewProfile()"><h2>{{Post.poster?.fullName}}</h2></button>
     </ion-item>
     <ion-card-content>
       <img *ngIf="Post.content.contentType == 'photo'" [src]="Post?.content.img">

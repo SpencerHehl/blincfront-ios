@@ -9,9 +9,9 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { NearMePage } from '../pages/posts/nearme/nearme.component';
-import { PostFormModal } from '../pages/posts/shared/post-form.modal';
+import { PostFormModal } from '../shared/modals/post-form.modal';
 import { LoginPage } from '../pages/login/login.component';
-import { MyFeedPage } from '../pages/profile/myfeed/myfeed.component';
+import { ProfilePage } from '../pages/profile/profile.component';
 import { MapViewPage } from '../pages/posts/mapview/mapview.component';
 import { ListViewPage } from '../pages/posts/listview/listview.component';
 import { CommentPage } from '../pages/comments/comment.component';
@@ -25,7 +25,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Network } from '@ionic-native/network';
 import { Camera } from '@ionic-native/camera';
 
-import { PostService } from '../pages/posts/shared/post.service';
+import { PostService } from '../shared/services/post.service';
 import { AuthService } from '../shared/services/auth.service';
 import { ProfileService } from '../pages/profile/shared/profile.service';
 import { CommentService } from '../pages/comments/shared/comment.service';
@@ -58,7 +58,7 @@ const cloudSettings: CloudSettings = {
     PostFormModal,
     LoginPage,
     DateAgePipe,
-    MyFeedPage,
+    ProfilePage,
     MapViewPage,
     ListViewPage,
     CommentPage
@@ -78,7 +78,7 @@ const cloudSettings: CloudSettings = {
     NearMePage,
     PostFormModal,
     LoginPage,
-    MyFeedPage,
+    ProfilePage,
     MapViewPage,
     ListViewPage,
     CommentPage

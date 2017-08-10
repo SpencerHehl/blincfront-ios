@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { PostService } from '../../../pages/posts/shared/post.service';
+import { PostService } from '../../services/post.service';
 import { CommentPage } from '../../../pages/comments/comment.component';
+import { ProfilePage } from '../../../pages/profile/profile.component';
 import { MediaService } from '../../services/media.service';
 
 @Component({
@@ -50,5 +51,9 @@ export class PostCardComponent {
 
     viewComments(Post) {
         this.navCtrl.push(CommentPage, {'post': Post});
+    }
+
+    viewProfile(){
+        this.navCtrl.push(ProfilePage, {user: this.Post.poster})
     }
 }

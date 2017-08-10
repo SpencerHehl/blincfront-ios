@@ -8,6 +8,7 @@ export class AuthService {
     authMethod: string;
     currentUser: any;
     authToken: any;
+    mongoUser: string;
 
     constructor(public user: User, private http: Http,
         private facebookAuth: FacebookAuth, private googleAuth: GoogleAuth){}
@@ -19,7 +20,9 @@ export class AuthService {
         headers.append('Authorization', this.authToken);
         let options = new RequestOptions({headers: headers});
         return this.http.post('http://104.238.138.146:8081/user/newuser', newUser, options).map((response: Response) => {
-            return JSON.stringify(response.json());
+            console.log(response.json());
+            this.mongoUser = response.json();
+            return response.json();
         }).catch(this.handleError);
     }
 
@@ -42,7 +45,8 @@ export class AuthService {
         console.log(body);
         return this.http.post('http://104.238.138.146:8081/user/login', body, options)
             .map((response: Response) => {
-                console.log(response);
+                console.log(response.json());
+                this.mongoUser = response.json();
                 return response.json();
             })
             .catch(this.handleError);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Observable } from 'rxjs/Rx';
-import { AuthService } from '../../../shared/services/auth.service';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class PostService{

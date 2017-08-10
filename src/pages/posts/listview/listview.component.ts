@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-import { PostService } from '../shared/post.service';
+import { PostService } from '../../../shared/services/post.service';
 
 @Component({
     templateUrl: 'listview.component.html'

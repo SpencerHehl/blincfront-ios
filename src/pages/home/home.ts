@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { AuthService } from '../../shared/services/auth.service';
-import { MyFeedPage } from '../profile/myfeed/myfeed.component';
+import { ProfilePage } from '../profile/profile.component';
 
 @Component({
   selector: 'page-home',
@@ -13,6 +13,6 @@ export class HomePage {
   constructor(public navCtrl: NavController, private authService: AuthService) {}
 
   myProfile(){
-    this.navCtrl.push(MyFeedPage);
+    this.navCtrl.push(ProfilePage, {user: this.authService.mongoUser});
   }
 }

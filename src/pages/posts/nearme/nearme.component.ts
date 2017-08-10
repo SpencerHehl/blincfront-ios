@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
-import { PostService } from '../shared/post.service';
-import { PostFormModal } from '../shared/post-form.modal';
+import { PostService } from '../../../shared/services/post.service';
+import { PostFormModal } from '../../../shared/modals/post-form.modal';
 
 @Component({
     templateUrl: 'nearme.component.html'
@@ -31,6 +31,10 @@ export class NearMePage implements OnInit{
     postText(){
         let postModal = this.modalCtrl.create(PostFormModal, {postType: 'text'});
         postModal.present();
+        postModal.onDidDismiss(response => {
+            this.nearbyPostsDate.unshift(response);
+            this.nearbyPostsLikes.push(response);
+        });
     }
 
     postPhoto(){
@@ -45,6 +49,10 @@ export class NearMePage implements OnInit{
             let base64Image = 'data:image/jpeg;base64,' + imageData;
             let postModal = this.modalCtrl.create(PostFormModal, {postType: 'photo', image: base64Image});
             postModal.present();
+            postModal.onDidDismiss(response => {
+                this.nearbyPostsDate.unshift(response);
+                this.nearbyPostsLikes.push(response);
+            });
         }, (err) => {
             this.failAlert(err);
         });
