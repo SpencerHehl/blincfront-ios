@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HomePage } from '../home/home';
+import { ProfilePage } from '../profile/profile.component';
 import { NearMePage } from '../posts/nearme/nearme.component';
 import { MapViewPage } from '../posts/mapview/mapview.component';
 
@@ -9,9 +9,9 @@ import { MapViewPage } from '../posts/mapview/mapview.component';
 })
 export class TabsPage {
 
-  tab1Root = HomePage;
-  tab2Root = NearMePage;
-  tab3Root = MapViewPage;
+  tab3Root = ProfilePage;
+  tab1Root = NearMePage;
+  tab2Root = MapViewPage;
 
   constructor() {
 
