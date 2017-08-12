@@ -1,4 +1,4 @@
-<ion-card>
+<ion-card [hidden]="Comment.isFlagged">
     <ion-item>
         <ion-avatar item-start>
             <img [src]="Comment.commenter?.profilePicture" (click)="viewProfile()">

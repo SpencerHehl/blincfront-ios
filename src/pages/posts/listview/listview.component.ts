@@ -26,6 +26,22 @@ export class ListViewPage{
         )
     }
 
+    reportPost(post, index){
+        this.mapPosts.splice(index, 1);
+        this.postService.reportPost(post).subscribe(
+            resp => {},
+            err => this.failAlert(err)
+        )
+    }
+
+    deletePost(post, index){
+        this.mapPosts.splice(index, 1);
+        this.postService.deletePost(post).subscribe(
+            resp => {},
+            err => this.failAlert(err)
+        )
+    }
+
     failAlert(message){
         let alert = this.alertCtrl.create({
             title: 'Error',

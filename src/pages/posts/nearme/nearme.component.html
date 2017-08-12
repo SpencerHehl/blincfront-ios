@@ -19,12 +19,12 @@
   </ion-item>
   <ion-row>
     <ion-col *ngFor="let post of nearbyPostsDate" [hidden]="postFilter != 'date'">
-      <post-card [Post]="post"></post-card>
+      <post-card [Post]="post" (reportPost)="reportPostDate($event, i)" (deletePost)="deletePostDate($event, i)"></post-card>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col *ngFor="let post of nearbyPostsLikes" [hidden]="postFilter != 'like'">
-      <post-card [Post]="post"></post-card>
+      <post-card [Post]="post" (reportPost)="reportPostLikes($event, i)" (deletePost)="deletePostLikes($event, i)"></post-card>
     </ion-col>
   </ion-row>
   <p *ngIf="nearbyPostsDate?.length == 0">Woah it is pretty lonely here. Looks like you are a pioneer in your area. Start posting and get the conversation started!</p>

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NavController, NavParams, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController, AlertController } from 'ionic-angular';
 
 import { PostService } from '../../services/post.service';
 import { CommentPage } from '../../../pages/comments/comment.component';
@@ -13,12 +13,15 @@ import { AuthService } from '../../services/auth.service';
 })
 export class PostCardComponent {
     @Input() Post: any;
+    @Output() deleteEmitter = new EventEmitter();
+    @Output() reportEmitter = new EventEmitter();
     likeColor: string;
     isActiveUser: boolean;
 
     constructor(private postService: PostService, private navCtrl: NavController,
          private navParams: NavParams, private mediaService: MediaService,
-         private authService: AuthService, private actionSheetCtrl: ActionSheetController){}
+         private authService: AuthService, private actionSheetCtrl: ActionSheetController,
+         private alertCtrl: AlertController){}
 
     ngOnInit(){
         if(this.Post.likedByUser){
@@ -66,12 +69,12 @@ export class PostCardComponent {
                     text: 'Delete Comment',
                     role: 'destructive',
                     handler: () => {
-                        this.deletePost();
+                        this.confirmDelete();
                     } 
                     },{
                         text: 'Flag as Inappropriate',
                         handler: () => {
-                            this.reportPost();
+                            this.confirmReport();
                         }
                     },{
                         text: 'Cancel',
@@ -90,7 +93,7 @@ export class PostCardComponent {
                     {
                         text: 'Flag as Inappropriate',
                         handler: () => {
-                            this.reportPost();
+                            this.confirmReport();
                         }
                     },{
                         text: 'Cancel',
@@ -106,11 +109,56 @@ export class PostCardComponent {
     }
 
     deletePost(){
-
+        this.deleteEmitter.emit(this.Post);
     }
 
     reportPost(){
+        this.Post.isFlagged = true;
+        this.reportEmitter.emit(this.Post);
+    }
 
+    confirmDelete(){
+        let confirmAlert = this.alertCtrl.create({
+            title: 'Confirm',
+            subTitle: 'Are you sure you want to delete this post?',
+            buttons: [
+                {
+                    text: 'Yes',
+                    handler: () => {
+                        this.deletePost();
+                    } 
+                },
+                {
+                    text: 'No',
+                    handler: () => {
+                        confirmAlert.dismiss();
+                    }
+                }
+            ]
+        });
+        confirmAlert.present();
+    }
+
+    confirmReport(){
+        let confirmAlert = this.alertCtrl.create({
+            title: 'Confirm',
+            subTitle: 'Are you sure you want to report this post?',
+            buttons: [
+                {
+                    text: 'Yes',
+                    handler: () => {
+                        this.reportPost();
+                    } 
+                },
+                {
+                    text: 'No',
+                    handler: () => {
+                        confirmAlert.dismiss();
+                    }
+                }
+            ]
+        });
+        confirmAlert.present();
     }
 
     viewComments(Post) {

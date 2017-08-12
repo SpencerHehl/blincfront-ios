@@ -169,6 +169,34 @@ export class PostService{
             .catch(this.handleError);    
     }
 
+    deletePost(post){
+        let token = this.authService.authToken;
+        let headers = new Headers({'Authorization': token});
+        let options = new RequestOptions({headers: headers});
+
+        return this.http.delete('http://blincapp.com/post/delete/' + post._id, options)
+            .map((resp) => {
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
+    reportPost(post){
+        let headers = new Headers({'Content-type': 'application/json'});
+        let token = this.authService.authToken;
+        headers.append('Authorization', token);
+        let options = new RequestOptions({headers: headers});
+        let body = {
+            id: post._id
+        }
+
+        return this.http.put('http://blincapp.com/post/report', body, options)
+            .map((resp) => {
+                return resp.json();
+            })
+            .catch(this.handleError);
+    }
+
     private handleError(error){
         return Observable.throw(error);
     }

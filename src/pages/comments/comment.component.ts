@@ -66,6 +66,22 @@ export class CommentPage {
         }
     }
 
+    deleteComment(comment, index){
+        this.postComments.splice(index, 1);
+        this.commentService.deleteComment(comment).subscribe(
+            resp => {},
+            err => this.failAlert(err)
+        )
+    }
+
+    reportComment(comment, index){
+        this.postComments.splice(index, 1);
+        this.commentService.reportComment(comment).subscribe(
+            resp => {},
+            err => this.failAlert(err)
+        )
+    }
+
     failAlert(message){
         let alert = this.alertCtrl.create({
             title: 'Error',

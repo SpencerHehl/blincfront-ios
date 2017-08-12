@@ -112,6 +112,38 @@ export class NearMePage implements OnInit{
         }
     }
 
+    reportPostDate(post, index){
+        this.nearbyPostsDate.splice(index, 1);
+        this.postService.reportPost(post).subscribe(
+            resp => {},
+            err => this.failAlert(err)
+        )
+    }
+
+    deletePostDate(post, index){
+        this.nearbyPostsDate.splice(index, 1);
+        this.postService.deletePost(post).subscribe(
+            resp => {},
+            err => this.failAlert(err)
+        )
+    }
+
+    reportPostLikes(post, index){
+        this.nearbyPostsLikes.splice(index, 1);
+        this.postService.reportPost(post).subscribe(
+            resp => {},
+            err => this.failAlert(err)
+        )
+    }
+
+    deletePostLikes(post, index){
+        this.nearbyPostsLikes.splice(index, 1);
+        this.postService.deletePost(post).subscribe(
+            resp => {},
+            err => this.failAlert(err)
+        )
+    }
+
     failAlert(message){
         let alert = this.alertCtrl.create({
         title: 'Error',

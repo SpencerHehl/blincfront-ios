@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NavController, ActionSheetController } from 'ionic-angular';
+import { NavController, ActionSheetController, AlertController } from 'ionic-angular';
 
 import { CommentService } from '../../../pages/comments/shared/comment.service';
 import { AuthService } from '../../services/auth.service';
@@ -11,11 +11,14 @@ import { ProfilePage } from '../../../pages/profile/profile.component';
 })
 export class CommentCardComponent{
     @Input() Comment: any;
+    @Output() deleteEmitter = new EventEmitter();
+    @Output() reportEmitter = new EventEmitter();
     likeColor: string;
     isActiveUser: boolean;
 
     constructor(private commentService: CommentService, private navCtrl: NavController,
-         private actionSheetCtrl: ActionSheetController, private authService: AuthService){}
+         private actionSheetCtrl: ActionSheetController, private authService: AuthService,
+         private alertCtrl: AlertController){}
 
     ngOnInit(){
         if(this.Comment.likedByUser){
@@ -56,12 +59,12 @@ export class CommentCardComponent{
                     text: 'Delete Comment',
                     role: 'destructive',
                     handler: () => {
-                        this.deleteComment();
+                        this.confirmDelete();
                     } 
                     },{
                         text: 'Flag as Inappropriate',
                         handler: () => {
-                            this.reportComment();
+                            this.confirmReport();
                         }
                     },{
                         text: 'Cancel',
@@ -80,7 +83,7 @@ export class CommentCardComponent{
                     {
                         text: 'Flag as Inappropriate',
                         handler: () => {
-                            this.reportComment();
+                            this.confirmReport();
                         }
                     },{
                         text: 'Cancel',
@@ -96,11 +99,56 @@ export class CommentCardComponent{
     }
 
     deleteComment(){
-
+        this.deleteEmitter.emit(this.Comment);
     }
 
     reportComment(){
+        this.Comment.isFlagged = true;
+        this.reportEmitter.emit(this.Comment);
+    }
 
+    confirmDelete(){
+        let confirmAlert = this.alertCtrl.create({
+            title: 'Confirm',
+            subTitle: 'Are you sure you want to delete this comment?',
+            buttons: [
+                {
+                    text: 'Yes',
+                    handler: () => {
+                        this.deleteComment();
+                    } 
+                },
+                {
+                    text: 'No',
+                    handler: () => {
+                        confirmAlert.dismiss();
+                    }
+                }
+            ]
+        });
+        confirmAlert.present();
+    }
+
+    confirmReport(){
+        let confirmAlert = this.alertCtrl.create({
+            title: 'Confirm',
+            subTitle: 'Are you sure you want to report this comment?',
+            buttons: [
+                {
+                    text: 'Yes',
+                    handler: () => {
+                        this.reportComment();
+                    } 
+                },
+                {
+                    text: 'No',
+                    handler: () => {
+                        confirmAlert.dismiss();
+                    }
+                }
+            ]
+        });
+        confirmAlert.present();
     }
 
     viewProfile(){
