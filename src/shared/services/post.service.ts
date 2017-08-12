@@ -40,7 +40,7 @@ export class PostService{
                 let token = this.authService.authToken;
                 let headers = new Headers({'Authorization': token});
                 let options = new RequestOptions({headers: headers});
-                return this.http.get('http://blincapp.com/post/nearme/date?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0', options)
+                return this.http.get('http://104.238.138.146:8081/post/nearme/date?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0', options)
                     .map((resp) => {
                         return resp.json();
                     })
@@ -61,7 +61,7 @@ export class PostService{
                 let token = this.authService.authToken;
                 let headers = new Headers({'Authorization': token});
                 let options = new RequestOptions({headers: headers});
-                return this.http.get('http://blincapp.com/post/nearme/likes?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0', options)
+                return this.http.get('http://104.238.138.146:8081/post/nearme/likes?lat=' + resp.coords.latitude + '&lng=' + resp.coords.longitude + '&page=0', options)
                     .map((resp) => {
                         return resp.json();
                     })
@@ -73,7 +73,7 @@ export class PostService{
         let token = this.authService.authToken;
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
-        return this.http.get('http://blincapp.com/post/nearme/date?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.datePage, options)
+        return this.http.get('http://104.238.138.146:8081/post/nearme/date?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.datePage, options)
             .map((resp) => {
                 this.datePage += 1;
                 return resp.json();
@@ -85,7 +85,7 @@ export class PostService{
         let token = this.authService.authToken;
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
-        return this.http.get('http://blincapp.com/post/nearme/likes?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.likesPage, options)
+        return this.http.get('http://104.238.138.146:8081/post/nearme/likes?lat=' + this.myLocation.lat + '&lng=' + this.myLocation.lng + '&page=' + this.likesPage, options)
             .map((resp) => {
                 this.likesPage += 1;
                 return resp.json();
@@ -101,7 +101,7 @@ export class PostService{
         let body = {
             id: postId
         }
-        return this.http.put('http://blincapp.com/post/like', body, options)
+        return this.http.put('http://104.238.138.146:8081/post/like', body, options)
             .map((resp) => {
                 return resp.json();
             })
@@ -116,7 +116,7 @@ export class PostService{
         let body = {
             id: postId
         }
-        return this.http.put('http://blincapp.com/post/unlike', body, options)
+        return this.http.put('http://104.238.138.146:8081/post/unlike', body, options)
             .map((resp) => {
                 return resp.json();
             })
@@ -129,7 +129,7 @@ export class PostService{
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
         post["geolocation"] = this.myLocation;
-        return this.http.post('http://blincapp.com/post/text/', post, options).map((response: Response) => {
+        return this.http.post('http://104.238.138.146:8081/post/text/', post, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }
@@ -142,7 +142,7 @@ export class PostService{
         post["geolocation"] = this.myLocation;
         post["imageData"] = image;
         console.log(image);
-        return this.http.post('http://blincapp.com/post/picture/', post, options).map((response: Response) => {
+        return this.http.post('http://104.238.138.146:8081/post/picture/', post, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }
@@ -151,7 +151,7 @@ export class PostService{
         let token = this.authService.authToken;
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
-        return this.http.get('http://blincapp.compost/mapmarkers?distance=' + distance + '&lat=' + location.lat+ '&lng=' + location.lng, options)
+        return this.http.get('http://104.238.138.146:8081post/mapmarkers?distance=' + distance + '&lat=' + location.lat+ '&lng=' + location.lng, options)
             .map((resp) => {
                 return resp.json();
             })
@@ -162,7 +162,7 @@ export class PostService{
         let token = this.authService.authToken;
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
-        return this.http.get('http://blincapp.com/post/mapposts?distance=' + distance + '&lat=' + location.lat+ '&lng=' + location.lng, options)
+        return this.http.get('http://104.238.138.146:8081/post/mapposts?distance=' + distance + '&lat=' + location.lat+ '&lng=' + location.lng, options)
             .map((resp) => {
                 return resp.json();
             })
@@ -174,7 +174,7 @@ export class PostService{
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
 
-        return this.http.delete('http://blincapp.com/post/delete/' + post._id, options)
+        return this.http.delete('http://104.238.138.146:8081/post/delete/' + post._id, options)
             .map((resp) => {
                 return resp.json();
             })
@@ -190,7 +190,7 @@ export class PostService{
             id: post._id
         }
 
-        return this.http.put('http://blincapp.com/post/report', body, options)
+        return this.http.put('http://104.238.138.146:8081/post/report', body, options)
             .map((resp) => {
                 return resp.json();
             })

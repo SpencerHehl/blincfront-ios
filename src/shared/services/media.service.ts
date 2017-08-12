@@ -7,7 +7,7 @@ export class MediaService{
     constructor(private http: Http){}
 
     getMedia(id){
-        return this.http.get('http://blincapp.com/media/' + id)
+        return this.http.get('http://104.238.138.146:8081/media/' + id)
             .map((resp) =>{
                 return resp.json();
             })
