@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ActionSheetController } from 'ionic-angular';
 
 import { CommentService } from '../../../pages/comments/shared/comment.service';
+import { AuthService } from '../../services/auth.service';
 import { ProfilePage } from '../../../pages/profile/profile.component';
 
 @Component({
@@ -11,14 +12,21 @@ import { ProfilePage } from '../../../pages/profile/profile.component';
 export class CommentCardComponent{
     @Input() Comment: any;
     likeColor: string;
+    isActiveUser: boolean;
 
-    constructor(private commentService: CommentService, private navCtrl: NavController){}
+    constructor(private commentService: CommentService, private navCtrl: NavController,
+         private actionSheetCtrl: ActionSheetController, private authService: AuthService){}
 
     ngOnInit(){
         if(this.Comment.likedByUser){
             this.likeColor = 'primary';
         }else{
             this.likeColor = 'dark';
+        }
+        if(this.Comment.commenter._id == this.authService.mongoUser._id){
+            this.isActiveUser = true;
+        }else{
+            this.isActiveUser = false;
         }
     }
 
@@ -37,6 +45,62 @@ export class CommentCardComponent{
                 response => {}
             )
         }
+    }
+
+    viewMore(){
+        if(this.isActiveUser){
+            let actionSheet = this.actionSheetCtrl.create({
+                title: 'More',
+                buttons: [
+                    {
+                    text: 'Delete Comment',
+                    role: 'destructive',
+                    handler: () => {
+                        this.deleteComment();
+                    } 
+                    },{
+                        text: 'Flag as Inappropriate',
+                        handler: () => {
+                            this.reportComment();
+                        }
+                    },{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                            actionSheet.dismiss();
+                        }
+                    }
+                ]
+            });
+            actionSheet.present();
+        }else{
+            let actionSheet = this.actionSheetCtrl.create({
+                title: 'More',
+                buttons: [
+                    {
+                        text: 'Flag as Inappropriate',
+                        handler: () => {
+                            this.reportComment();
+                        }
+                    },{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                            actionSheet.dismiss();
+                        }
+                    }
+                ]
+            });
+            actionSheet.present();
+        }
+    }
+
+    deleteComment(){
+
+    }
+
+    reportComment(){
+
     }
 
     viewProfile(){

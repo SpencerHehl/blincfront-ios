@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ActionSheetController } from 'ionic-angular';
 
 import { PostService } from '../../services/post.service';
 import { CommentPage } from '../../../pages/comments/comment.component';
 import { ProfilePage } from '../../../pages/profile/profile.component';
 import { MediaService } from '../../services/media.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'post-card',
@@ -13,9 +14,11 @@ import { MediaService } from '../../services/media.service';
 export class PostCardComponent {
     @Input() Post: any;
     likeColor: string;
+    isActiveUser: boolean;
 
     constructor(private postService: PostService, private navCtrl: NavController,
-         private navParams: NavParams, private mediaService: MediaService){}
+         private navParams: NavParams, private mediaService: MediaService,
+         private authService: AuthService, private actionSheetCtrl: ActionSheetController){}
 
     ngOnInit(){
         if(this.Post.likedByUser){
@@ -28,6 +31,11 @@ export class PostCardComponent {
                 resp => this.Post.content["img"] = resp,
                 err => console.log(err)
             )
+        }
+        if(this.Post.poster._id == this.authService.mongoUser._id){
+            this.isActiveUser = true;
+        }else{
+            this.isActiveUser = false;
         }
     }
 
@@ -47,6 +55,62 @@ export class PostCardComponent {
             )
         }
         
+    }
+
+    viewMore(){
+        if(this.isActiveUser){
+            let actionSheet = this.actionSheetCtrl.create({
+                title: 'More',
+                buttons: [
+                    {
+                    text: 'Delete Comment',
+                    role: 'destructive',
+                    handler: () => {
+                        this.deletePost();
+                    } 
+                    },{
+                        text: 'Flag as Inappropriate',
+                        handler: () => {
+                            this.reportPost();
+                        }
+                    },{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                            actionSheet.dismiss();
+                        }
+                    }
+                ]
+            });
+            actionSheet.present();
+        }else{
+            let actionSheet = this.actionSheetCtrl.create({
+                title: 'More',
+                buttons: [
+                    {
+                        text: 'Flag as Inappropriate',
+                        handler: () => {
+                            this.reportPost();
+                        }
+                    },{
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => {
+                            actionSheet.dismiss();
+                        }
+                    }
+                ]
+            });
+            actionSheet.present();
+        }
+    }
+
+    deletePost(){
+
+    }
+
+    reportPost(){
+
     }
 
     viewComments(Post) {
