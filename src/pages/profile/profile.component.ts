@@ -6,6 +6,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { ProfileService } from './shared/profile.service';
 import { PostService } from '../../shared/services/post.service';
 import { PostFormModal } from '../../shared/modals/post-form.modal';
+import { FollowListPage } from './followlist/followlist.component';
 
 @Component({
   templateUrl: 'profile.component.html'
@@ -14,6 +15,7 @@ export class ProfilePage {
   user: any;
   followColor: string;
   followText: string;
+  isActiveUser: boolean;
 
   constructor(public navCtrl: NavController, private authService: AuthService,
     private profileService: ProfileService, public alertCtrl: AlertController,
@@ -34,6 +36,11 @@ export class ProfilePage {
                 }else{
                     this.followColor = 'dark';
                     this.followText = "Unfollowed";
+                }
+                if(this.user._id == this.authService.mongoUser._id){
+                    this.isActiveUser = true;
+                }else{
+                    this.isActiveUser = false;
                 }
             },
             err => this.failAlert(err)
@@ -95,6 +102,18 @@ export class ProfilePage {
                 response => {},
                 err => this.failAlert(err)
             )
+        }
+    }
+
+    viewFollowerList(){
+        if(this.isActiveUser){
+            this.navCtrl.push(FollowListPage, {followList: this.user.followedBy, followType: 'Followers'});
+        }
+    }
+
+    viewFollowingList(){
+        if(this.isActiveUser){
+            this.navCtrl.push(FollowListPage, {followList: this.user.followList, followType: 'Following'});
         }
     }
 

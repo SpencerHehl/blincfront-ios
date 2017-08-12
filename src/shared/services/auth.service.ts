@@ -8,7 +8,7 @@ export class AuthService {
     authMethod: string;
     currentUser: any;
     authToken: any;
-    mongoUser: string;
+    mongoUser: any;
 
     constructor(public user: User, private http: Http,
         private facebookAuth: FacebookAuth, private googleAuth: GoogleAuth){}

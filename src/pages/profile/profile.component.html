@@ -1,15 +1,34 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{user?.fullName}}</ion-title>
     <ion-buttons end>
-      <button *ngIf="user?._id == authService.mongoUser._id" ion-button (click)="notifications()" icon-right><ion-icon name="flag"></ion-icon><ion-badge *ngIf="notifications && notifications.length > 0" color="danger">{{notifications?.length}}</ion-badge></button>
-      <button *ngIf="user?._id == authService.mongoUser._id" ion-button (click)="settings()" icon-right><ion-icon name="settings"></ion-icon></button>
-      <button *ngIf="user?._id != authService.mongoUser._id" ion-button (click)="followUser()" icon-right><ion-icon name="star" [color]="followColor"></ion-icon>{{followText}}</button>
+      <button *ngIf="isActiveUser" ion-button (click)="notifications()" icon-right><ion-icon name="flag"></ion-icon><ion-badge *ngIf="notifications && notifications.length > 0" color="danger">{{notifications?.length}}</ion-badge></button>
+      <button *ngIf="isActiveUser" ion-button (click)="settings()" icon-right><ion-icon name="settings"></ion-icon></button>
+      <button *ngIf="!isActiveUser" ion-button (click)="followUser()" icon-right><ion-icon name="star" [color]="followColor"></ion-icon>{{followText}}</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding style="background-color: #cbd3db">
+  <ion-row>
+    <ion-col>
+      <ion-avatar>
+        <img [src]="user?.profilePicutre">
+      </ion-avatar>
+    </ion-col>
+    <ion-col>
+      <ion-row>
+        <ion-title>{{user?.fullName}}</ion-title>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div (click)="viewFollowerList()">{{user?.numFollowers}} Followers</div>
+        </ion-col>
+        <ion-col>
+          <div (click)="viewFollowingList()">{{user?.numFollowed}} Following</div>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
   <ion-row>
     <ion-col *ngFor="let post of user?.myPosts">
       <post-card [Post]="post"></post-card>

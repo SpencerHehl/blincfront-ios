@@ -15,9 +15,11 @@ import { ProfilePage } from '../pages/profile/profile.component';
 import { MapViewPage } from '../pages/posts/mapview/mapview.component';
 import { ListViewPage } from '../pages/posts/listview/listview.component';
 import { CommentPage } from '../pages/comments/comment.component';
+import { FollowListPage } from '../pages/profile/followlist/followlist.component';
 
 import { PostCardComponent } from '../shared/templates/posts/post.card'
 import { CommentCardComponent } from '../shared/templates/comments/comment.card';
+import { UserCardComponent } from '../shared/templates/user/user.card';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -61,7 +63,9 @@ const cloudSettings: CloudSettings = {
     ProfilePage,
     MapViewPage,
     ListViewPage,
-    CommentPage
+    CommentPage,
+    UserCardComponent,
+    FollowListPage
   ],
   imports: [
     BrowserModule,
@@ -81,7 +85,8 @@ const cloudSettings: CloudSettings = {
     ProfilePage,
     MapViewPage,
     ListViewPage,
-    CommentPage
+    CommentPage,
+    FollowListPage
   ],
   providers: [
     PostService,
