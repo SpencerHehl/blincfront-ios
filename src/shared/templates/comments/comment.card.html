@@ -1,9 +1,9 @@
 <ion-card>
     <ion-item>
         <ion-avatar item-start>
-            <img [src]="Comment.commenter?.profilePicture">
+            <img [src]="Comment.commenter?.profilePicture" (click)="viewProfile()">
         </ion-avatar>
-        <button ion-button clear (click)="viewProfile()"><h2>{{Comment.commenter?.fullName}}</h2></button>
+        <h2 (click)="viewProfile()">{{Comment.commenter?.fullName}}</h2>
     </ion-item>
     <ion-card-content>
         <img *ngIf="Comment.content.contentType == 'photo'" [src]="Comment.content.img">

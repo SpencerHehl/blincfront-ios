@@ -1,12 +1,12 @@
   <ion-card>
     <ion-item>
       <ion-avatar item-start>
-        <img [src]="Post.poster?.profilePicture">
+        <img [src]="Post.poster?.profilePicture" (click)="viewProfile()">
       </ion-avatar>
       <ion-note float-right>
         {{Post.createdDate | dateAge}}
       </ion-note>
-      <button ion-button clear (click)="viewProfile()"><h2>{{Post.poster?.fullName}}</h2></button>
+      <h2 (click)="viewProfile()">{{Post.poster?.fullName}}</h2>
     </ion-item>
     <ion-card-content>
       <img *ngIf="Post.content.contentType == 'photo'" [src]="Post?.content.img">

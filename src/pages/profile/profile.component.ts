@@ -21,9 +21,12 @@ export class ProfilePage {
     private camera: Camera, private navParams: NavParams) {}
 
     ionViewWillLoad(){
-        this.user = this.navParams.get('user');
-        this.profileService.getProfile(this.user._id).subscribe(
+        var passedUser = this.navParams.get('user');
+        console.log(passedUser);
+        console.log(this.authService.mongoUser);
+        this.profileService.getProfile(passedUser._id).subscribe(
             response => {
+                console.log(response);
                 this.user = response;
                 if(this.user.followed){
                     this.followColor = 'primary';
