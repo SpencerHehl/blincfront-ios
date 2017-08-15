@@ -4,6 +4,7 @@ import { NavParams, ViewController, AlertController } from 'ionic-angular';
 import { PostService } from '../services/post.service';
 
 @Component({
+    styleUrls: ['post-form.modal.css'],
     templateUrl: 'post-form.modal.html'
 })
 export class PostFormModal {
