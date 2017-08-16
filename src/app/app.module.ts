@@ -32,6 +32,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { ProfileService } from '../pages/profile/shared/profile.service';
 import { CommentService } from '../pages/comments/shared/comment.service';
 import { MediaService } from '../shared/services/media.service';
+import { NotificationService } from '../shared/services/notifications.service';
 import { DateAgePipe } from '../shared/pipes/date.pipe';
 
 const cloudSettings: CloudSettings = {
@@ -98,6 +99,7 @@ const cloudSettings: CloudSettings = {
     ProfileService,
     CommentService,
     MediaService,
+    NotificationService,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
