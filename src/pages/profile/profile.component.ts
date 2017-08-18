@@ -26,6 +26,9 @@ export class ProfilePage {
         var passedUser = this.navParams.get('user');
         console.log(passedUser);
         console.log(this.authService.mongoUser);
+        if(!passedUser){
+            passedUser = this.authService.mongoUser;
+        }
         this.profileService.getProfile(passedUser._id).subscribe(
             response => {
                 console.log(response);

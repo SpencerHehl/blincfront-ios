@@ -19,7 +19,7 @@ export class AuthService {
         let headers = new Headers({'Content-type': 'application/json'});
         headers.append('Authorization', this.authToken);
         let options = new RequestOptions({headers: headers});
-        return this.http.post('http://104.238.138.146:8081/user/newuser', newUser, options).map((response: Response) => {
+        return this.http.post('http://104.238.138.146:8082/user/newuser', newUser, options).map((response: Response) => {
             console.log(response.json());
             this.mongoUser = response.json();
             return response.json();
@@ -43,7 +43,7 @@ export class AuthService {
         let options = new RequestOptions({headers: headers});
         console.log(options);
         console.log(body);
-        return this.http.post('http://104.238.138.146:8081/user/login', body, options)
+        return this.http.post('http://104.238.138.146:8082/user/login', body, options)
             .map((response: Response) => {
                 console.log(response.json());
                 this.mongoUser = response.json();
@@ -63,7 +63,7 @@ export class AuthService {
         let headers = new Headers({'Content-type': 'application/json'});
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
-        return this.http.post('http://104.238.138.146:8081/user/logout', body, options)
+        return this.http.post('http://104.238.138.146:8082/user/logout', body, options)
         .map((response) =>{
             return response.json();
         })
