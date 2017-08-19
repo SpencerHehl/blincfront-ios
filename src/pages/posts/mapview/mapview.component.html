@@ -10,9 +10,4 @@
 </ion-header>
 <ion-content padding>
     <div id="map"></div >
-    <ion-row [hidden]="viewType == map">
-        <ion-col *ngFor="let post of mapPosts">
-            <post-card [Post]="post"></post-card>
-        </ion-col>
-    </ion-row>
 </ion-content>

@@ -8,7 +8,7 @@
 <ion-content padding>
     <ion-row>
         <ion-col *ngFor="let post of mapPosts; let i = index">
-            <post-card [Post]="post" (reportPost)="reportPost($event, i)" (deletePost)="deletePost($event, i)"></post-card>
+            <post-card [Post]="post" (reportEmitter)="reportPost($event, i)" (deleteEmitter)="deletePost($event, i)"></post-card>
         </ion-col>
     </ion-row>
 </ion-content>

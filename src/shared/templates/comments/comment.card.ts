@@ -59,12 +59,16 @@ export class CommentCardComponent{
                     text: 'Delete Comment',
                     role: 'destructive',
                     handler: () => {
-                        this.confirmDelete();
+                        actionSheet.dismiss().then(()=>{
+                            this.confirmDelete();
+                        })
                     } 
                     },{
                         text: 'Flag as Inappropriate',
                         handler: () => {
-                            this.confirmReport();
+                            actionSheet.dismiss().then(()=>{
+                                this.confirmReport();
+                            })
                         }
                     },{
                         text: 'Cancel',
@@ -83,7 +87,9 @@ export class CommentCardComponent{
                     {
                         text: 'Flag as Inappropriate',
                         handler: () => {
-                            this.confirmReport();
+                            actionSheet.dismiss().then(()=>{
+                                this.confirmReport();
+                            })
                         }
                     },{
                         text: 'Cancel',
@@ -115,6 +121,7 @@ export class CommentCardComponent{
                 {
                     text: 'Yes',
                     handler: () => {
+                        confirmAlert.dismiss();
                         this.deleteComment();
                     } 
                 },
@@ -137,6 +144,7 @@ export class CommentCardComponent{
                 {
                     text: 'Yes',
                     handler: () => {
+                        confirmAlert.dismiss();
                         this.reportComment();
                     } 
                 },

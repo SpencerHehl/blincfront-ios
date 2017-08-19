@@ -31,7 +31,7 @@
   </ion-row>
   <ion-row>
     <ion-col *ngFor="let post of user?.myPosts">
-      <post-card [Post]="post" (reportPost)="reportPost($event, i)" (deletePost)="deletePost($event, i)"></post-card>
+      <post-card [Post]="post" (reportEmitter)="reportPost($event, i)" (deleteEmitter)="deletePost($event, i)"></post-card>
     </ion-col>
   </ion-row>
   <button ion-button block (click)="loadMore()">Load more posts</button>

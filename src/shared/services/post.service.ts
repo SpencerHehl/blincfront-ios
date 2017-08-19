@@ -151,7 +151,7 @@ export class PostService{
         let token = this.authService.authToken;
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
-        return this.http.get('http://104.238.138.146:8082post/mapmarkers?distance=' + distance + '&lat=' + location.lat+ '&lng=' + location.lng, options)
+        return this.http.get('http://104.238.138.146:8082/post/mapmarkers?distance=' + distance + '&lat=' + location.lat+ '&lng=' + location.lng, options)
             .map((resp) => {
                 return resp.json();
             })

@@ -131,7 +131,9 @@ export class ProfilePage {
     deletePost(post, index){
         this.user.myPosts.splice(index, 1);
         this.postService.deletePost(post).subscribe(
-            resp => {},
+            resp => {
+                console.log(resp);
+            },
             err => this.failAlert(err)
         )
     }

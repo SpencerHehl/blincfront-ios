@@ -9,7 +9,7 @@
     <post-card [Post]="post"></post-card>
     <ion-row>
         <ion-col *ngFor="let comment of postComments; let i = index">
-            <comment-card [Comment]="comment" (reportComment)="reportComment($event, i)" (deleteComment)="deleteComment($event, i)"></comment-card>
+            <comment-card [Comment]="comment" (reportEmitter)="reportComment($event, i)" (deleteEmitter)="deleteComment($event, i)"></comment-card>
         </ion-col>
     </ion-row>
     <ion-row>
