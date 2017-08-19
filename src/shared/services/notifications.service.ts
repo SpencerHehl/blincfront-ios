@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class NotificationService {
     page: number;
+    myNotifications: any;
 
     constructor(private http: Http, private authService: AuthService){
         this.page = 0;

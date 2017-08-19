@@ -15,15 +15,15 @@ export class UserCardComponent{
     followText: string;
 
     constructor(private profileService: ProfileService, private navCtrl: NavController,
-         private alertCtrl: AlertController){}
+         private alertCtrl: AlertController, private authService: AuthService){}
 
     ngOnInit(){
         if(this.User.followed){
             this.followColor = "primary";
-            this.followColor = "Followed";
+            this.followText = "Followed";
         }else{
             this.followColor = "dark";
-            this.followColor = "Unfollowed";
+            this.followText = "Unfollowed";
         }
     }
 

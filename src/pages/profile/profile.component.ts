@@ -5,6 +5,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AuthService } from '../../shared/services/auth.service';
 import { ProfileService } from './shared/profile.service';
 import { PostService } from '../../shared/services/post.service';
+import { NotificationService } from '../../shared/services/notifications.service';
 import { PostFormModal } from '../../shared/modals/post-form.modal';
 import { FollowListPage } from './followlist/followlist.component';
 
@@ -16,11 +17,13 @@ export class ProfilePage {
   followColor: string;
   followText: string;
   isActiveUser: boolean;
+  notifications: any[];
 
   constructor(public navCtrl: NavController, private authService: AuthService,
     private profileService: ProfileService, public alertCtrl: AlertController,
     private postService: PostService, public modalCtrl: ModalController,
-    private camera: Camera, private navParams: NavParams) {}
+    private camera: Camera, private navParams: NavParams,
+    private notifcationService: NotificationService) {}
 
     ionViewWillLoad(){
         var passedUser = this.navParams.get('user');
@@ -43,6 +46,12 @@ export class ProfilePage {
                 }else{
                     this.isActiveUser = false;
                 }
+            },
+            err => this.failAlert(err)
+        )
+        this.notifcationService.getNotifications().subscribe(
+            response => {
+                this.notifications = response;
             },
             err => this.failAlert(err)
         )
@@ -108,13 +117,13 @@ export class ProfilePage {
 
     viewFollowerList(){
         if(this.isActiveUser){
-            this.navCtrl.push(FollowListPage, {followList: this.user.followedBy, followType: 'Followers'});
+            this.navCtrl.push(FollowListPage, {followList: this.user.followedBy, listType: 'Followers'});
         }
     }
 
     viewFollowingList(){
         if(this.isActiveUser){
-            this.navCtrl.push(FollowListPage, {followList: this.user.followList, followType: 'Following'});
+            this.navCtrl.push(FollowListPage, {followList: this.user.followList, listType: 'Following'});
         }
     }
 
