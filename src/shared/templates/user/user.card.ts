@@ -3,6 +3,7 @@ import { NavController, AlertController } from 'ionic-angular';
 
 import { ProfileService } from '../../../pages/profile/shared/profile.service';
 import { ProfilePage } from '../../../pages/profile/profile.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
     selector: 'user-card',
