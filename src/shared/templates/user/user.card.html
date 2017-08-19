@@ -5,7 +5,7 @@
         </ion-avatar>
         <h2 (click)="viewProfile()">{{User?.fullName}}</h2>
         <ion-buttons item-end>
-            <button *ngIf="user?._id != authService.mongoUser._id" ion-button (click)="followUser()" icon-right><ion-icon name="star" [color]="followColor"></ion-icon>{{followText}}</button>
+            <button *ngIf="user?._id != authService.mongoUser._id" ion-button (click)="followUser()" icon-right clear [color]="followColor"><ion-icon name="star" [color]="followColor"></ion-icon>{{followText}}</button>
         </ion-buttons>
     </ion-item>
 </ion-card>
