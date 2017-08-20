@@ -1,15 +1,13 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>
-            Comments
-        </ion-title>
     </ion-navbar>
 </ion-header>
+
 <ion-content>
     <post-card [Post]="post"></post-card>
     <ion-row>
-        <ion-col *ngFor="let comment of postComments; let i = index">
-            <comment-card [Comment]="comment" (reportEmitter)="reportComment($event, i)" (deleteEmitter)="deleteComment($event, i)"></comment-card>
+        <ion-col *ngFor="let comment of comments; let i = index">
+            <comment-card [Comment]="comment"></comment-card>
         </ion-col>
     </ion-row>
     <ion-row>

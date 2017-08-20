@@ -3,6 +3,7 @@ import { AlertController, NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { CommentService } from './shared/comment.service';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
     templateUrl: 'comment.component.html'
@@ -15,7 +16,7 @@ export class CommentPage {
 
     constructor(private navCtrl: NavController, private alertCtrl: AlertController,
          private commentService: CommentService, private navParams: NavParams,
-         private camera: Camera){}
+         private camera: Camera, private authService: AuthService){}
     
     ionViewWillLoad(){
         this.post = this.navParams.get('post');

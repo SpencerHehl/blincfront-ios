@@ -16,10 +16,13 @@ import { MapViewPage } from '../pages/posts/mapview/mapview.component';
 import { ListViewPage } from '../pages/posts/listview/listview.component';
 import { CommentPage } from '../pages/comments/comment.component';
 import { FollowListPage } from '../pages/profile/followlist/followlist.component';
+import { NotificationPage } from '../pages/notifications/notification/notification.component';
+import { NotificationListPage } from '../pages/notifications/listview/list.notification.component';
 
 import { PostCardComponent } from '../shared/templates/posts/post.card'
 import { CommentCardComponent } from '../shared/templates/comments/comment.card';
 import { UserCardComponent } from '../shared/templates/user/user.card';
+import { NotificationCardComponent } from '../shared/templates/notifications/notification.card';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -58,6 +61,7 @@ const cloudSettings: CloudSettings = {
     NearMePage,
     PostCardComponent,
     CommentCardComponent,
+    NotificationCardComponent,
     PostFormModal,
     LoginPage,
     DateAgePipe,
@@ -66,7 +70,9 @@ const cloudSettings: CloudSettings = {
     ListViewPage,
     CommentPage,
     UserCardComponent,
-    FollowListPage
+    FollowListPage,
+    NotificationPage,
+    NotificationListPage
   ],
   imports: [
     BrowserModule,
@@ -87,7 +93,9 @@ const cloudSettings: CloudSettings = {
     MapViewPage,
     ListViewPage,
     CommentPage,
-    FollowListPage
+    FollowListPage,
+    NotificationPage,
+    NotificationListPage
   ],
   providers: [
     PostService,
