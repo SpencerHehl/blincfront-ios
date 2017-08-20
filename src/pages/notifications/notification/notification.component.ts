@@ -20,7 +20,8 @@ export class NotificationPage{
 
     constructor(private commentService: CommentService, private postService: PostService,
          private notificationService: NotificationService, private navParams: NavParams,
-         private alertCtrl: AlertController, private camera: Camera){}
+         private alertCtrl: AlertController, private camera: Camera,
+         private authService: AuthService){}
 
     ionViewWillLoad(){
         this.type = this.navParams.get('type');
