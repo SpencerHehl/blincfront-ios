@@ -8,6 +8,7 @@ import { PostService } from '../../shared/services/post.service';
 import { NotificationService } from '../../shared/services/notifications.service';
 import { PostFormModal } from '../../shared/modals/post-form.modal';
 import { FollowListPage } from './followlist/followlist.component';
+import { NotificationListPage } from '../notifications/listview/list.notification.component';
 
 @Component({
   templateUrl: 'profile.component.html'
@@ -146,7 +147,7 @@ export class ProfilePage {
     }
 
     viewNotifications(){
-
+        this.navCtrl.push(NotificationListPage);
     }
 
     failAlert(message){

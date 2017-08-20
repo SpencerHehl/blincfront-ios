@@ -40,7 +40,7 @@ export class NotificationPage{
                     this.post = response.post;
                     this.comments = response.comments;
                 },
-                err => this.failAlert(err);
+                err => this.failAlert(err)
             )
         }
     }

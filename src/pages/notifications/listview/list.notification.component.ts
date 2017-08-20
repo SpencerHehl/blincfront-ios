@@ -4,7 +4,7 @@ import { NavController, AlertController, NavParams } from 'ionic-angular';
 import { NotificationService } from '../../../shared/services/notifications.service';
 
 @Component({
-    templateUrl: 'list.notifications.component.html'
+    templateUrl: 'list.notification.component.html'
 })
 export class NotificationListPage{
     notifications: any[];
