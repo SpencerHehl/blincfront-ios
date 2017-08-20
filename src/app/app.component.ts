@@ -12,7 +12,7 @@ import { NotificationService } from '../shared/services/notifications.service';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
+  rootPage:any = TabsPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
       private notificationService: NotificationService) {

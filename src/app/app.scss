@@ -14,3 +14,21 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@font-face{
+font-family: Montserrat;
+src: url('../assets/fonts/Mont.woff2') format('woff2');
+}
+ 
+*{
+font-family: Montserrat;
+}
+
+
+.toolbar-background {
+  background-color: map-get($colors, primary);
+}
+
+.toolbar-title.toolbar-title-md, 
+.toolbar-title.toolbar-title-ios, 
+.toolbar-title.toolbar-title-wp { color:white; }
