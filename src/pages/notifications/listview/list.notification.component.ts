@@ -13,6 +13,10 @@ export class NotificationListPage{
          public navParams: NavParams, public navCtrl: NavController){}
 
     ionViewWillLoad(){
-        this.notifications = this.navParams.get('notifications');
+        this.notificationService.getAllNotifications().subscribe(
+            response => {
+                this.notifications = response;
+            }
+        )
     }
 }

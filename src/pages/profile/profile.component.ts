@@ -49,7 +49,7 @@ export class ProfilePage {
             },
             err => this.failAlert(err)
         )
-        this.notifcationService.getNotifications().subscribe(
+        this.notifcationService.getUnreadNotifications().subscribe(
             response => {
                 this.notifications = response;
             },
@@ -143,6 +143,10 @@ export class ProfilePage {
             },
             err => this.failAlert(err)
         )
+    }
+
+    viewNotifications(){
+
     }
 
     failAlert(message){

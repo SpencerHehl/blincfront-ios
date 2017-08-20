@@ -13,12 +13,12 @@ export class NotificationService {
         this.page = 0;
     }
 
-    getNotifications(){
+    getUnreadNotifications(){
         let token = this.authService.authToken;
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
 
-        return this.http.get('http://104.238.138.146:8082/notifications/', options)
+        return this.http.get('http://104.238.138.146:8082/notifications/unread', options)
             .map((resp) => {
                 return resp.json();
             })
@@ -71,7 +71,7 @@ export class NotificationService {
         let headers = new Headers({'Authorization': token});
         let options = new RequestOptions({headers: headers});
 
-        return this.http.get('http://104.238.138.146:8082/notifications/all?page=' + this.page, options)
+        return this.http.get('http://104.238.138.146:8082/notifications/?page=' + this.page, options)
             .map((resp) => {
                 this.page += 1;
                 return resp.json();
