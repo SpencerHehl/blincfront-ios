@@ -18,7 +18,8 @@ export class NotificationListPage{
         this.notificationService.getAllNotifications().subscribe(
             response => {
                 this.notifications = response;
-            }
+            },
+            err => this.failAlert(err)
         )
     }
     viewProfile(notification){
@@ -37,5 +38,25 @@ export class NotificationListPage{
             this.navCtrl.push(ProfilePage, { followUser: notification.sourceUser._id });
             this.notificationService.updateNotification(notification._id).subscribe();
         }
+    }
+
+    loadMore(){
+        this.notificationService.getAllNotifications().subscribe(
+            response => {
+                if(response.length > 0){
+                    this.notifications.push(response);
+                }
+            },
+            err => this.failAlert(err)
+        )
+    }
+
+    failAlert(message){
+        let alert = this.alertCtrl.create({
+        title: 'Error',
+        subTitle: message,
+        buttons: ['OK']
+        });
+        alert.present();
     }
 }

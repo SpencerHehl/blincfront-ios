@@ -16,6 +16,7 @@
             <ion-note item-end>{{notification.createdDate | dateAge}}</ion-note>
         </ion-item>
     </ion-list>
+    <button ion-button block (click)="loadMore()">Load more notifications</button>
     <!--<ion-row *ngFor="let notification of notifications">
         <notification-card [Notification]="notification"></notification-card>
     </ion-row>-->
