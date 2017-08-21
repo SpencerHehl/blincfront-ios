@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
+
 @Injectable()
 export class MediaService{
     constructor(private http: Http){}
 
     getMedia(id){
-        return this.http.get('http://104.238.138.146:8082/media/' + id)
+        return this.http.get('http://www.blincapp.com/media/' + id)
             .map((resp) =>{
                 return resp.json();
             })
