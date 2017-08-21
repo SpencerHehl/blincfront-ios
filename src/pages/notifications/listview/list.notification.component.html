@@ -7,7 +7,16 @@
 </ion-header>
 
 <ion-content>
-    <ion-row *ngFor="let notification of notifications">
+    <ion-list>
+        <ion-item *ngFor='let notification of notifications'>
+            <ion-avatar item-start>
+                <img [src]='notification.sourceUser?.profilePicture' (click)="viewProfile(notification)">
+            </ion-avatar>
+            <p (click)="viewItem(notification)">{{notification.content}}</p>
+            <ion-note item-end>{{notification.createdDate | dateAge}}</ion-note>
+        </ion-item>
+    </ion-list>
+    <!--<ion-row *ngFor="let notification of notifications">
         <notification-card [Notification]="notification"></notification-card>
-    </ion-row>
+    </ion-row>-->
 </ion-content>
