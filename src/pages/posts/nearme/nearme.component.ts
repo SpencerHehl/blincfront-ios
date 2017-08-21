@@ -32,9 +32,10 @@ export class NearMePage implements OnInit{
         let postModal = this.modalCtrl.create(PostFormModal, {postType: 'text'});
         postModal.present();
         postModal.onDidDismiss(response => {
-            console.log(response);
-            this.nearbyPostsDate.unshift(response);
-            this.nearbyPostsLikes.push(response);
+            if(response){
+                this.nearbyPostsDate.unshift(response);
+                this.nearbyPostsLikes.push(response);
+            }
         });
     }
 
@@ -51,8 +52,10 @@ export class NearMePage implements OnInit{
             let postModal = this.modalCtrl.create(PostFormModal, {postType: 'photo', image: base64Image});
             postModal.present();
             postModal.onDidDismiss(response => {
-                this.nearbyPostsDate.unshift(response);
-                this.nearbyPostsLikes.push(response);
+                if(response){
+                    this.nearbyPostsDate.unshift(response);
+                    this.nearbyPostsLikes.push(response);
+                }
             });
         }, (err) => {
             this.failAlert(err);
