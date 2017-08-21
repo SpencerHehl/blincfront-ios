@@ -3,7 +3,7 @@
       <ion-avatar item-start>
         <img [src]="Post.poster?.profilePicture" (click)="viewProfile()">
       </ion-avatar>
-      <ion-note float-right>
+      <ion-note item-end>
         {{Post.createdDate | dateAge}}
       </ion-note>
       <h2 (click)="viewProfile()">{{Post.poster?.fullName}}</h2>
@@ -12,6 +12,7 @@
       </ion-buttons>
     </ion-item>
     <ion-card-content>
+      <h3>{{Post.content?.title}} @ {{Post.content?.location}}</h3>
       <img *ngIf="Post.content.contentType == 'photo'" [src]="Post?.content.img">
       <p>{{Post.content.body}}</p>
     </ion-card-content>
