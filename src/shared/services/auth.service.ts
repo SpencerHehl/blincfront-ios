@@ -57,8 +57,10 @@ export class AuthService {
         let token;
         if(this.authMethod == 'facebook'){
             token = this.facebookAuth.getToken();
+            this.facebookAuth.logout();
         }else{
             token = this.googleAuth.getToken();
+            this.googleAuth.logout();
         }
         let headers = new Headers({'Content-type': 'application/json'});
         headers.append('Authorization', token);

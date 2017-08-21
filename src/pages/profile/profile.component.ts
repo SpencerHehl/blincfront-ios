@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, ModalController, ActionSheetController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { AuthService } from '../../shared/services/auth.service';
@@ -9,6 +9,7 @@ import { NotificationService } from '../../shared/services/notifications.service
 import { PostFormModal } from '../../shared/modals/post-form.modal';
 import { FollowListPage } from './followlist/followlist.component';
 import { NotificationListPage } from '../notifications/listview/list.notification.component';
+import { LoginPage } from '../login/login.component';
 
 @Component({
   templateUrl: 'profile.component.html'
@@ -24,7 +25,7 @@ export class ProfilePage {
     private profileService: ProfileService, public alertCtrl: AlertController,
     private postService: PostService, public modalCtrl: ModalController,
     private camera: Camera, private navParams: NavParams,
-    private notifcationService: NotificationService) {}
+    private notifcationService: NotificationService, private actionSheetCtrl: ActionSheetController) {}
 
     ionViewWillLoad(){
         var passedUser = this.navParams.get('user');
@@ -155,6 +156,57 @@ export class ProfilePage {
 
     viewNotifications(){
         this.navCtrl.push(NotificationListPage);
+    }
+
+    settings(){
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Settings',
+            buttons: [
+                {
+                    text: 'Log Out',
+                    handler: () => {
+                        actionSheet.dismiss().then(() => {
+                            this.confirmLogout();
+                        })
+                    }
+                },{
+                    text: 'Cancel',
+                    role: 'cancel',
+                    handler: () => {
+                        actionSheet.dismiss();
+                    }
+                }
+            ]
+        });
+        actionSheet.present();
+    }
+
+    confirmLogout(){
+        let confirmAlert = this.alertCtrl.create({
+            title: 'Confirm',
+            subTitle: 'Are you sure you want to log out?',
+            buttons: [
+                {
+                    text: 'Yes',
+                    handler: () => {
+                        this.authService.logout().subscribe(
+                            response => {},
+                            err => this.failAlert(err),
+                            () => {
+                                this.navCtrl.setRoot(LoginPage);
+                            }
+                        )
+                    }
+                },{
+                    text: 'No',
+                    role: 'cancel',
+                    handler: () => {
+                        confirmAlert.dismiss();
+                    }
+                }
+            ]
+        });
+        confirmAlert.present();
     }
 
     failAlert(message){
