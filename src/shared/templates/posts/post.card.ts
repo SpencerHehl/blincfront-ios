@@ -68,7 +68,7 @@ export class PostCardComponent {
                 title: 'More',
                 buttons: [
                     {
-                    text: 'Delete Comment',
+                    text: 'Delete Post',
                     role: 'destructive',
                     handler: () => {
                         actionSheet.dismiss().then(()=>{

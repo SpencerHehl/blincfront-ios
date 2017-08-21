@@ -34,7 +34,7 @@
             <ion-textarea style="font-family: 'Montserrat', sans-serif;width:80%;font-size:100%;color:black;border:none;margin-top:10px;" placeholder="Location" name="location" (ngModel)="location"></ion-textarea>      
           </ion-item>
           <ion-item *ngIf="postType == 'text'" style="width:100%; padding:none; height:100%;">
-            <textarea rows="16" cols="50" style="font-family: 'Montserrat', sans-serif;font-size:100%;padding:none;width:100%;background:#f4f5f4;height:75%; border:none;" (ngModel)="comment"></textarea>
+            <ion-textarea rows="16" cols="50" style="font-family: 'Montserrat', sans-serif;font-size:100%;padding:none;width:100%;background:#f4f5f4;height:75%; border:none;" placeholder="Comment..." name="comment" (ngModel)="comment"></ion-textarea>
           </ion-item>
           <ion-item>
             <ion-label>Mappable</ion-label>

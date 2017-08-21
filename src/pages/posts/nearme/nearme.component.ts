@@ -32,6 +32,7 @@ export class NearMePage implements OnInit{
         let postModal = this.modalCtrl.create(PostFormModal, {postType: 'text'});
         postModal.present();
         postModal.onDidDismiss(response => {
+            console.log(response);
             this.nearbyPostsDate.unshift(response);
             this.nearbyPostsLikes.push(response);
         });
