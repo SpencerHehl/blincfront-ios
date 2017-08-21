@@ -6,13 +6,13 @@
       <ion-note item-end>
         {{Post.createdDate | dateAge}}
       </ion-note>
-      <h2 (click)="viewProfile()">{{Post.poster?.fullName}}</h2>
+      <h2 (click)="viewProfile()" style="font-weight:bold">{{Post.poster?.fullName}}</h2>
       <ion-buttons item-end>
           <button ion-button (click)="viewMore()" clear><ion-icon name="more"></ion-icon></button>
       </ion-buttons>
     </ion-item>
     <ion-card-content>
-      <h3>{{Post.content?.title}} @ {{Post.content?.location}}</h3>
+      <h3 style="font-weight:bold">{{Post.content?.title}} @ {{Post.content?.location}}</h3>
       <img *ngIf="Post.content.contentType == 'photo'" [src]="Post?.content.img">
       <p>{{Post.content.body}}</p>
     </ion-card-content>
