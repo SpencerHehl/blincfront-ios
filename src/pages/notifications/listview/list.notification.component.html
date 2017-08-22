@@ -12,8 +12,9 @@
             <ion-avatar item-start>
                 <img [src]='notification.sourceUser?.profilePicture' (click)="viewProfile(notification)">
             </ion-avatar>
-            <p (click)="viewItem(notification)">{{notification.content}}</p>
+            <p>{{notification.content}}</p>
             <ion-note item-end>{{notification.createdDate | dateAge}}</ion-note>
+            <button ion-button (click)="viewItem(notification)" item-end><ion-icon name="arrow-forward"></ion-icon></button>
         </ion-item>
     </ion-list>
     <button ion-button block (click)="loadMore()">Load more notifications</button>

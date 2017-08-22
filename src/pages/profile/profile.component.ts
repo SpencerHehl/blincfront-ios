@@ -56,6 +56,7 @@ export class ProfilePage {
     ionViewDidEnter(){
         this.notifcationService.getUnreadNotifications().subscribe(
             response => {
+                console.log(response);
                 this.notifications = response;
             },
             err => this.failAlert(err)

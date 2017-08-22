@@ -15,8 +15,9 @@ export class NotificationListPage{
          public navParams: NavParams, public navCtrl: NavController){}
 
     ionViewWillLoad(){
-        this.notificationService.getAllNotifications().subscribe(
+        this.notificationService.getNotifications().subscribe(
             response => {
+                console.log(response);
                 this.notifications = response;
             },
             err => this.failAlert(err)
@@ -41,7 +42,7 @@ export class NotificationListPage{
     }
 
     loadMore(){
-        this.notificationService.getAllNotifications().subscribe(
+        this.notificationService.getMoreNotifications().subscribe(
             response => {
                 if(response.length > 0){
                     this.notifications.push(response);

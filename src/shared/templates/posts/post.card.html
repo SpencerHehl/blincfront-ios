@@ -3,16 +3,16 @@
       <ion-avatar item-start>
         <img [src]="Post.poster?.profilePicture" (click)="viewProfile()">
       </ion-avatar>
-      <ion-note item-end>
-        {{Post.createdDate | dateAge}}
-      </ion-note>
       <h2 (click)="viewProfile()" style="font-weight:bold">{{Post.poster?.fullName}}</h2>
+      <ion-note>
+          {{Post.createdDate | dateAge}}
+      </ion-note>
       <ion-buttons item-end>
           <button ion-button (click)="viewMore()" clear><ion-icon name="more"></ion-icon></button>
       </ion-buttons>
     </ion-item>
-    <ion-card-content>
-      <h3 style="font-weight:bold">{{Post.content?.title}} @ {{Post.content?.location}}</h3>
+    <ion-card-content style="margin-top:1%">
+      <h2 style="font-weight:bold">{{Post.content?.title}} <ion-icon *ngIf="Post.content?.location" name="at" color="primary"></ion-icon> {{Post.content?.location}}</h2>        
       <img *ngIf="Post.content.contentType == 'photo'" [src]="Post?.content.img">
       <p>{{Post.content.body}}</p>
     </ion-card-content>
