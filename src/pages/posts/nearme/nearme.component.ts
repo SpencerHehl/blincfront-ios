@@ -39,12 +39,37 @@ export class NearMePage implements OnInit{
         });
     }
 
+    postSavedPhoto(){
+        const options: CameraOptions = {
+            quality: 50,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE
+        }
+
+        this.camera.getPicture(options).then((imageData) => {
+            let base64Image = 'data:image/jpeg;base64,' + imageData;
+            let postModal = this.modalCtrl.create(PostFormModal, {postType: 'photo', image: base64Image});
+            postModal.present();
+            postModal.onDidDismiss(response => {
+                if(response){
+                    this.nearbyPostsDate.unshift(response);
+                    this.nearbyPostsLikes.push(response);
+                }
+            });
+        }, (err) => {
+            this.failAlert(err);
+        });
+    }
+
     postPhoto(){
         const options: CameraOptions = {
             quality: 50,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE
+            mediaType: this.camera.MediaType.PICTURE,
+            saveToPhotoAlbum: true
         }
 
         this.camera.getPicture(options).then((imageData) => {
