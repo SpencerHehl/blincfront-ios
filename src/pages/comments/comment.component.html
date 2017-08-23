@@ -25,6 +25,7 @@
                     <ion-item>
                         <ion-input type="text" placeholder="Comment.." name="comment" (ngModel)="comment"></ion-input>
                         <ion-buttons item-end>
+                            <button ion-button (click)="uploadPhoto()"><ion-icon name="image"></ion-icon></button>
                             <button ion-button (click)="takePhoto()"><ion-icon name="camera"></ion-icon></button>
                             <button ion-button type="submit"><ion-icon name="send"></ion-icon></button>
                         </ion-buttons>

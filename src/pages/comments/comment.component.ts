@@ -31,12 +31,30 @@ export class CommentPage {
         )
     }
 
+    uploadPhoto(){
+        const options: CameraOptions = {
+            quality: 50,
+            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            encodingType: this.camera.EncodingType.JPEG,
+            mediaType: this.camera.MediaType.PICTURE
+        }
+
+        this.camera.getPicture(options).then((imageData) => {
+            let base64Image = 'data:image/jpeg;base64,' + imageData;
+            this.newCommentImg = base64Image;
+        }, (err) => {
+            this.failAlert(err);
+        });
+    }
+
     takePhoto(){
         const options: CameraOptions = {
             quality: 50,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
-            mediaType: this.camera.MediaType.PICTURE
+            mediaType: this.camera.MediaType.PICTURE,
+            saveToPhotoAlbum: true
         }
 
         this.camera.getPicture(options).then((imageData) => {
