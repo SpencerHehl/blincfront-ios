@@ -30,11 +30,21 @@ export class NotificationListPage{
 
     viewItem(notification){
         if(notification.commentId){
-            this.navCtrl.push(NotificationPage, { type: 'comment', commentId: notification.commentId });
-            this.notificationService.updateNotification(notification._id).subscribe();
+            this.notificationService.updateNotification(notification._id).subscribe();            
+            this.notificationService.getComment(notification.commentId).subscribe(
+                response => {
+                    this.navCtrl.push(NotificationPage, { post: response.post, comments: response.comments });                
+                },
+                err => this.failAlert(err),
+            )
         }else if(notification.postId){
-            this.navCtrl.push(NotificationPage, { type: 'post', postId: notification.postId });
-            this.notificationService.updateNotification(notification._id).subscribe();
+            this.notificationService.updateNotification(notification._id).subscribe();            
+            this.notificationService.getPost(notification.postId).subscribe(
+                response => {
+                    this.navCtrl.push(NotificationPage, { post: response.post, comments: response.comments });                
+                },
+                err => this.failAlert(err),
+            )
         }else{
             this.navCtrl.push(ProfilePage, { followUser: notification.sourceUser._id });
             this.notificationService.updateNotification(notification._id).subscribe();

@@ -1,19 +1,17 @@
 import { Component } from '@angular/core';
-import { NavParams, AlertController } from 'ionic-angular';
+import { NavParams, AlertController, NavController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { CommentService } from '../../comments/shared/comment.service';
 import { PostService } from '../../../shared/services/post.service';
 import { NotificationService } from '../../../shared/services/notifications.service';
 import { AuthService } from '../../../shared/services/auth.service';
+import { TabsPage } from '../../tabs/tabs';
 
 @Component({
     templateUrl: "notification.component.html"
 })
 export class NotificationPage{
-    type: string;
-    commentId: string;
-    postId: string;
     post: any;
     comments: any[];
     newCommentImg: string;
@@ -21,29 +19,11 @@ export class NotificationPage{
     constructor(private commentService: CommentService, private postService: PostService,
          private notificationService: NotificationService, private navParams: NavParams,
          private alertCtrl: AlertController, private camera: Camera,
-         private authService: AuthService){}
+         private authService: AuthService, private navCtrl: NavController){}
 
     ionViewWillLoad(){
-        this.type = this.navParams.get('type');
-        if(this.type == 'comment'){
-            this.commentId = this.navParams.get('commentId');
-            this.notificationService.getPost(this.commentId).subscribe(
-                response => {
-                    this.post = response.post;
-                    this.comments = response.comments;
-                },
-                err => this.failAlert(err)
-            )
-        }else{
-            this.postId = this.navParams.get('postId');
-            this.notificationService.getComment(this.postId).subscribe(
-                response => {
-                    this.post = response.post;
-                    this.comments = response.comments;
-                },
-                err => this.failAlert(err)
-            )
-        }
+        this.post = this.navParams.get('post');
+        this.comments = this.navParams.get('comments');
     }
 
     takePhoto(){
@@ -83,6 +63,24 @@ export class NotificationPage{
                 err => this.failAlert(err)
             )
         }
+    }
+
+    reportPostDate(post, index){
+        this.postService.reportPost(post).subscribe(
+            resp => {
+                this.navCtrl.setRoot(TabsPage);
+            },
+            err => this.failAlert(err)
+        )
+    }
+
+    deletePostDate(post, index){
+        this.postService.deletePost(post).subscribe(
+            resp => {
+                this.navCtrl.setRoot(TabsPage);
+            },
+            err => this.failAlert(err)
+        )
     }
 
     deleteComment(comment, index){

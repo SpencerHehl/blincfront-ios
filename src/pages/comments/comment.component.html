@@ -6,7 +6,7 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <post-card [Post]="post"></post-card>
+    <post-card [Post]="post" (reportEmitter)="reportPost($event)" (deleteEmitter)="deletePost($event)"></post-card>
     <ion-row>
         <ion-col *ngFor="let comment of postComments; let i = index">
             <comment-card [Comment]="comment" (reportEmitter)="reportComment($event, i)" (deleteEmitter)="deleteComment($event, i)"></comment-card>

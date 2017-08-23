@@ -4,6 +4,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { CommentService } from './shared/comment.service';
 import { AuthService } from '../../shared/services/auth.service';
+import { PostService } from '../../shared/services/post.service';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
     templateUrl: 'comment.component.html'
@@ -16,7 +18,8 @@ export class CommentPage {
 
     constructor(private navCtrl: NavController, private alertCtrl: AlertController,
          private commentService: CommentService, private navParams: NavParams,
-         private camera: Camera, private authService: AuthService){}
+         private camera: Camera, private authService: AuthService,
+         private postService: PostService){}
     
     ionViewWillLoad(){
         this.post = this.navParams.get('post');
@@ -65,6 +68,24 @@ export class CommentPage {
                 err => this.failAlert(err)
             )
         }
+    }
+
+    reportPost(post, index){
+        this.postService.reportPost(post).subscribe(
+            resp => {
+                this.navCtrl.setRoot(TabsPage);
+            },
+            err => this.failAlert(err)
+        )
+    }
+
+    deletePost(post, index){
+        this.postService.deletePost(post).subscribe(
+            resp => {
+                this.navCtrl.setRoot(TabsPage);
+            },
+            err => this.failAlert(err)
+        )
     }
 
     deleteComment(comment, index){
