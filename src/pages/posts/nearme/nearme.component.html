@@ -2,13 +2,13 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>
+    <ion-title style="font-weight:bold">
       Near Me
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content class="appfont" padding style="background-color: #cbd3db">
+<ion-content class="appfont" style="background-color: #cbd3db">
   <ion-refresher (ionRefresh)="reloadPosts($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull down to refresh" refreshingSpinner="circles" refreshingText="Reloading..."></ion-refresher-content>
   </ion-refresher>

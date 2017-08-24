@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController, AlertController } from 'ionic-angular';
 
-import { PostService } from '../services/post.service';
+import { PostService } from '../../services/post.service';
 
 @Component({
     templateUrl: 'post-form.modal.html'

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NavController, ActionSheetController, AlertController } from 'ionic-angular';
 
-import { CommentService } from '../../../pages/comments/shared/comment.service';
+import { CommentService } from '../../services/comment.service';
 import { AuthService } from '../../services/auth.service';
 import { ProfilePage } from '../../../pages/profile/profile.component';
 

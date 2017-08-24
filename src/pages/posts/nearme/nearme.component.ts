@@ -3,7 +3,7 @@ import { NavController, NavParams, ModalController, AlertController } from 'ioni
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { PostService } from '../../../shared/services/post.service';
-import { PostFormModal } from '../../../shared/modals/post-form.modal';
+import { PostFormModal } from '../../../shared/modals/posts/post-form.modal';
 
 @Component({
     templateUrl: 'nearme.component.html'

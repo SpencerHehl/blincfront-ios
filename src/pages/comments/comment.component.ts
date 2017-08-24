@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { AlertController, NavController, NavParams } from 'ionic-angular';
+import { AlertController, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
-import { CommentService } from './shared/comment.service';
+import { CommentService } from '../../shared/services/comment.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { PostService } from '../../shared/services/post.service';
 import { TabsPage } from '../tabs/tabs';
+import { CommentFormModal } from '../../shared/modals/comments/comment-form.modal';
 
 @Component({
     templateUrl: 'comment.component.html'
@@ -19,7 +20,7 @@ export class CommentPage {
     constructor(private navCtrl: NavController, private alertCtrl: AlertController,
          private commentService: CommentService, private navParams: NavParams,
          private camera: Camera, private authService: AuthService,
-         private postService: PostService){}
+         private postService: PostService, private modalCtrl: ModalController){}
     
     ionViewWillLoad(){
         this.post = this.navParams.get('post');
@@ -31,7 +32,17 @@ export class CommentPage {
         )
     }
 
-    uploadPhoto(){
+    postText(){
+        let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'text'});
+        postModal.present();
+        postModal.onDidDismiss(response => {
+            if(response){
+                this.postComments.push(response);
+            }
+        });
+    }
+
+    postSavedPhoto(){
         const options: CameraOptions = {
             quality: 50,
             sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -42,13 +53,19 @@ export class CommentPage {
 
         this.camera.getPicture(options).then((imageData) => {
             let base64Image = 'data:image/jpeg;base64,' + imageData;
-            this.newCommentImg = base64Image;
+            let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'photo', image: base64Image});
+            postModal.present();
+            postModal.onDidDismiss(response => {
+                if(response){
+                    this.postComments.push(response);
+                }
+            });
         }, (err) => {
             this.failAlert(err);
         });
     }
 
-    takePhoto(){
+    postPhoto(){
         const options: CameraOptions = {
             quality: 50,
             destinationType: this.camera.DestinationType.DATA_URL,
@@ -59,33 +76,16 @@ export class CommentPage {
 
         this.camera.getPicture(options).then((imageData) => {
             let base64Image = 'data:image/jpeg;base64,' + imageData;
-            this.newCommentImg = base64Image;
+            let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'photo', image: base64Image});
+            postModal.present();
+            postModal.onDidDismiss(response => {
+                if(response){
+                    this.postComments.push(response);
+                }
+            });
         }, (err) => {
             this.failAlert(err);
         });
-    }
-
-    submitComment(formValues){
-        console.log(formValues);
-        formValues["postId"] = this.post._id;
-        if(this.newCommentImg){
-            console.log("submitting photo comment");
-            this.commentService.postPictureComment(formValues, this.newCommentImg).subscribe(
-                resp => {
-                    this.postComments.push(resp);
-                    this.newCommentImg = "";
-                },
-                err => this.failAlert(err)
-            )
-        }else{
-            console.log("submitting text comment");
-            this.commentService.postTextComment(formValues).subscribe(
-                resp => {
-                    this.postComments.push(resp);
-                },
-                err => this.failAlert(err)
-            )
-        }
     }
 
     reportPost(post, index){

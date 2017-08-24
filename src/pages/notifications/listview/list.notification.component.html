@@ -1,12 +1,12 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>
+        <ion-title style="font-weight:bold">
             Notifications
         </ion-title>
     </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content style="background-color: #cbd3db">
     <ion-list>
         <ion-item *ngFor='let notification of notifications' [ngStyle]="{'border-left': notification.viewed ? '' : '5px solid #6a597d'}">
             <ion-avatar item-start>
