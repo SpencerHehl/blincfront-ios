@@ -67,7 +67,7 @@ export class NotificationListPage{
         this.notificationService.getMoreNotifications().subscribe(
             response => {
                 if(response.length > 0){
-                    this.notifications.push(response);
+                    Array.prototype.push.apply(this.notifications, response);
                 }
             },
             err => this.failAlert(err)

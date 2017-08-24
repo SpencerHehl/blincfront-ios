@@ -32,6 +32,7 @@ export class ProfileService{
         let options = new RequestOptions({headers: headers});
         return this.http.get('http://104.238.138.146:8082/profile/' + profileId, options)
             .map((resp) => {
+                this.page += 1;
                 return resp.json();
             })
             .catch(this.handleError);

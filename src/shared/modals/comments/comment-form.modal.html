@@ -1,3 +1,5 @@
+<ion-header>
+
 <style>
     *:focus {
       outline: none;
@@ -14,11 +16,11 @@
     <div>
       <img *ngIf="postType == 'photo'" [src]="imageData">
     </div>
-    <form autocomplete="off" (ngSubmit)="submitPost(createPostForm.value)" #createPostForm="ngForm">
+    <form autocomplete="off" (ngSubmit)="submitPost(createCommentForm.value)" #createCommentForm="ngForm">
       <div style="width:90%;background:white;height:80%;margin-left:5%;z-index:2;margin-top:-75px;">
         <ion-list>
           <ion-item *ngIf="postType == 'photo'">
-            <ion-textarea placeholder="Caption" name="caption" (ngModel)="caption"></ion-textarea>
+            <ion-textarea placeholder="Caption" name="caption" (ngModel)="comment"></ion-textarea>
           </ion-item>
           <ion-item *ngIf="postType == 'text'" style="width:100%; padding:none; height:100%;">
             <ion-textarea rows="16" cols="50" style="font-family: 'Montserrat', sans-serif;font-size:100%;padding:none;width:100%;background:#f4f5f4;height:75%; border:none;" placeholder="Comment..." name="comment" (ngModel)="comment"></ion-textarea>

@@ -18,22 +18,24 @@ export class CommentService{
             .catch(this.handleError);
     }
 
-    postPictureComment(formValues, imgData){
+    postPictureComment(formValues, imgData, postId){
         let headers = new Headers({'Content-type': 'application/json'});
         let token = this.authService.authToken;
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
         formValues["imageData"] = imgData;
+        formValues["postId"] = postId;
         return this.http.post('http://104.238.138.146:8082/comment/picture/', formValues, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);
     }
 
-    postTextComment(formValues){
+    postTextComment(formValues, postId){
         let headers = new Headers({'Content-type': 'application/json'});
         let token = this.authService.authToken;
         headers.append('Authorization', token);
         let options = new RequestOptions({headers: headers});
+        formValues["postId"] = postId;
         return this.http.post('http://104.238.138.146:8082/comment/text/', formValues, options).map((response: Response) => {
             return response.json();
         }).catch(this.handleError);

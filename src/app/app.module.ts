@@ -73,7 +73,8 @@ const cloudSettings: CloudSettings = {
     UserCardComponent,
     FollowListPage,
     NotificationPage,
-    NotificationListPage
+    NotificationListPage,
+    CommentFormModal
   ],
   imports: [
     BrowserModule,
@@ -96,7 +97,8 @@ const cloudSettings: CloudSettings = {
     CommentPage,
     FollowListPage,
     NotificationPage,
-    NotificationListPage
+    NotificationListPage,
+    CommentFormModal
   ],
   providers: [
     PostService,

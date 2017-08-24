@@ -29,7 +29,7 @@ export class NotificationPage{
     }
 
     postText(){
-        let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'text'});
+        let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'text', postId: this.post._id});
         postModal.present();
         postModal.onDidDismiss(response => {
             if(response){
@@ -49,7 +49,7 @@ export class NotificationPage{
 
         this.camera.getPicture(options).then((imageData) => {
             let base64Image = 'data:image/jpeg;base64,' + imageData;
-            let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'photo', image: base64Image});
+            let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'photo', image: base64Image, postId: this.post._id});
             postModal.present();
             postModal.onDidDismiss(response => {
                 if(response){
@@ -72,7 +72,7 @@ export class NotificationPage{
 
         this.camera.getPicture(options).then((imageData) => {
             let base64Image = 'data:image/jpeg;base64,' + imageData;
-            let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'photo', image: base64Image});
+            let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'photo', image: base64Image, postId: this.post._id});
             postModal.present();
             postModal.onDidDismiss(response => {
                 if(response){

@@ -92,7 +92,7 @@ export class NearMePage implements OnInit{
             this.postService.loadDate().subscribe(
                 response => {
                     if(response.length > 0){
-                        this.nearbyPostsDate.push(response);
+                        Array.prototype.push.apply(this.nearbyPostsDate, response);
                     }
                 },
                 err => this.failAlert(err)
@@ -101,7 +101,7 @@ export class NearMePage implements OnInit{
             this.postService.loadLikes().subscribe(
                 response => {
                     if(response.length > 0){
-                        this.nearbyPostsLikes.push(response);
+                        Array.prototype.push.apply(this.nearbyPostsLikes, response);
                     }
                 },
                 err => this.failAlert(err)

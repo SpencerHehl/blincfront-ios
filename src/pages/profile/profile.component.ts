@@ -34,7 +34,6 @@ export class ProfilePage {
         }
         this.profileService.getProfile(passedUser._id).subscribe(
             response => {
-                console.log(response);
                 this.user = response;
                 if(this.user.followed){
                     this.followColor = 'primary';
@@ -66,8 +65,10 @@ export class ProfilePage {
     loadMore(){
         this.profileService.getProfilePosts(this.user._id).subscribe(
             response => {
+                console.log(response);
                 if(response.length > 0){
-                    this.user.myPosts.push(response);
+                    Array.prototype.push.apply(this.user.myPosts, response);
+                    console.log(this.user.myPosts);
                 }
             },
             err => this.failAlert(err)
