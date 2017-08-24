@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { NavParams, AlertController, NavController } from 'ionic-angular';
+import { NavParams, AlertController, NavController, ModalController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
-import { CommentService } from '../../comments/shared/comment.service';
+import { CommentService } from '../../../shared/services/comment.service';
 import { PostService } from '../../../shared/services/post.service';
 import { NotificationService } from '../../../shared/services/notifications.service';
 import { AuthService } from '../../../shared/services/auth.service';
 import { TabsPage } from '../../tabs/tabs';
+import { CommentFormModal } from '../../../shared/modals/comments/comment-form.modal';
 
 @Component({
     templateUrl: "notification.component.html"
@@ -19,14 +20,25 @@ export class NotificationPage{
     constructor(private commentService: CommentService, private postService: PostService,
          private notificationService: NotificationService, private navParams: NavParams,
          private alertCtrl: AlertController, private camera: Camera,
-         private authService: AuthService, private navCtrl: NavController){}
+         private authService: AuthService, private navCtrl: NavController,
+         private modalCtrl: ModalController){}
 
     ionViewWillLoad(){
         this.post = this.navParams.get('post');
         this.comments = this.navParams.get('comments');
     }
 
-    uploadPhoto(){
+    postText(){
+        let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'text'});
+        postModal.present();
+        postModal.onDidDismiss(response => {
+            if(response){
+                this.comments.push(response);
+            }
+        });
+    }
+
+    postSavedPhoto(){
         const options: CameraOptions = {
             quality: 50,
             sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -37,13 +49,19 @@ export class NotificationPage{
 
         this.camera.getPicture(options).then((imageData) => {
             let base64Image = 'data:image/jpeg;base64,' + imageData;
-            this.newCommentImg = base64Image;
+            let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'photo', image: base64Image});
+            postModal.present();
+            postModal.onDidDismiss(response => {
+                if(response){
+                    this.comments.push(response);
+                }
+            });
         }, (err) => {
             this.failAlert(err);
         });
     }
 
-    takePhoto(){
+    postPhoto(){
         const options: CameraOptions = {
             quality: 50,
             destinationType: this.camera.DestinationType.DATA_URL,
@@ -54,33 +72,16 @@ export class NotificationPage{
 
         this.camera.getPicture(options).then((imageData) => {
             let base64Image = 'data:image/jpeg;base64,' + imageData;
-            this.newCommentImg = base64Image;
+            let postModal = this.modalCtrl.create(CommentFormModal, {postType: 'photo', image: base64Image});
+            postModal.present();
+            postModal.onDidDismiss(response => {
+                if(response){
+                    this.comments.push(response);
+                }
+            });
         }, (err) => {
             this.failAlert(err);
         });
-    }
-
-    submitComment(formValues){
-        console.log(formValues);
-        formValues["postId"] = this.post._id;
-        if(this.newCommentImg){
-            console.log("submitting photo comment");
-            this.commentService.postPictureComment(formValues, this.newCommentImg).subscribe(
-                resp => {
-                    this.comments.push(resp);
-                    this.newCommentImg = "";
-                },
-                err => this.failAlert(err)
-            )
-        }else{
-            console.log("submitting text comment");
-            this.commentService.postTextComment(formValues).subscribe(
-                resp => {
-                    this.comments.push(resp);
-                },
-                err => this.failAlert(err)
-            )
-        }
     }
 
     reportPostDate(post, index){
