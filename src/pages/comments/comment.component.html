@@ -7,10 +7,8 @@
 </ion-header>
 <ion-content style="background-color: #cbd3db">
     <post-card [Post]="post" (reportEmitter)="reportPost($event)" (deleteEmitter)="deletePost($event)"></post-card>
-    <ion-row>
-        <ion-col *ngFor="let comment of postComments; let i = index">
+    <ion-row *ngFor="let comment of postComments; let i = index">
             <comment-card [Comment]="comment" (reportEmitter)="reportComment($event, i)" (deleteEmitter)="deleteComment($event, i)"></comment-card>
-        </ion-col>
     </ion-row>
     <ion-fab right bottom>
         <button ion-fab><ion-icon name="add"></ion-icon></button>

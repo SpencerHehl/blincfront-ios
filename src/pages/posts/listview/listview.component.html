@@ -6,9 +6,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content style="background-color: #cbd3db">
-    <ion-row>
-        <ion-col *ngFor="let post of mapPosts; let i = index">
-            <post-card [Post]="post" (reportEmitter)="reportPost($event, i)" (deleteEmitter)="deletePost($event, i)"></post-card>
-        </ion-col>
+    <ion-row *ngFor="let post of mapPosts; let i = index">
+        <post-card [Post]="post" (reportEmitter)="reportPost($event, i)" (deleteEmitter)="deletePost($event, i)"></post-card>
     </ion-row>
 </ion-content>
