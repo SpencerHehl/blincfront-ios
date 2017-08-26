@@ -25,8 +25,8 @@
   <ion-row *ngFor="let post of nearbyPostsLikes" [hidden]="postFilter != 'like'">
       <post-card [Post]="post" (reportEmitter)="reportPostLikes($event, i)" (deleteEmitter)="deletePostLikes($event, i)"></post-card>
   </ion-row>
-  <p *ngIf="nearbyPostsDate?.length == 0">Woah it is pretty lonely here. Looks like you are a pioneer in your area. Start posting and get the conversation started!</p>
-  <button ion-button block (click)="loadMore()">Load more posts</button>
+  <p *ngIf="nearbyPostsDate?.length == 0">It's pretty lonely here. Looks like you're a pioneer in your area. Start posting and get the conversation started!</p>
+  <button ion-button block (click)="loadMore()"style="width:80%;margin-left:10%;">Load more posts</button>
   <ion-fab right bottom>
     <button ion-fab><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">

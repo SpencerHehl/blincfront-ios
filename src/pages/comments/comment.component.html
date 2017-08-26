@@ -5,7 +5,7 @@
         </ion-title>
     </ion-navbar>
 </ion-header>
-<ion-content style="background-color: #cbd3db">
+<ion-content style="background-color: #cbd3db;">
     <post-card [Post]="post" (reportEmitter)="reportPost($event)" (deleteEmitter)="deletePost($event)"></post-card>
     <ion-row *ngFor="let comment of postComments; let i = index">
             <comment-card [Comment]="comment" (reportEmitter)="reportComment($event, i)" (deleteEmitter)="deleteComment($event, i)"></comment-card>

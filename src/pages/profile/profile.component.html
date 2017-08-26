@@ -35,7 +35,7 @@
   <ion-row *ngFor="let post of user?.myPosts">
       <post-card [Post]="post" (reportEmitter)="reportPost($event, i)" (deleteEmitter)="deletePost($event, i)"></post-card>
   </ion-row>
-  <button ion-button block (click)="loadMore()">Load more posts</button>
+  <button ion-button block (click)="loadMore()" style="width:80%;margin-left:10%;">Load more posts</button>
   <ion-fab right bottom>
     <button ion-fab><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">
