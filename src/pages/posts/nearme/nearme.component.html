@@ -3,7 +3,8 @@
 <ion-header>
   <ion-navbar>
     <ion-title style="font-weight:bold">
-      Near Me
+      <!--Near Me-->
+      <img src="img/logo.png" style="width: 75vw;">
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -13,7 +14,7 @@
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull down to refresh" refreshingSpinner="circles" refreshingText="Reloading..."></ion-refresher-content>
   </ion-refresher>
   <ion-item>
-    <ion-label>Sort By:</ion-label>
+    <ion-label></ion-label>
     <ion-select [(ngModel)]="postFilter" (ionChange)="onFilterChange()">
       <ion-option value="date">Most Recent</ion-option>
       <ion-option value="like">Top Posts</ion-option>
@@ -28,7 +29,7 @@
   <p *ngIf="nearbyPostsDate?.length == 0">It's pretty lonely here. Looks like you're a pioneer in your area. Start posting and get the conversation started!</p>
   <button ion-button block (click)="loadMore()"style="width:80%;margin-left:10%;">Load more posts</button>
   <ion-fab right bottom>
-    <button ion-fab><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="secondary"><ion-icon name="add"></ion-icon></button>
     <ion-fab-list side="top">
       <button ion-fab (click)="postText()"><ion-icon name="text"></ion-icon></button>
       <button ion-fab (click)="postPhoto()"><ion-icon name="camera"></ion-icon></button>

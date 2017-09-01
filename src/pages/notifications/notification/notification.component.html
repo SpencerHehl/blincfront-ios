@@ -6,7 +6,7 @@
 <ion-content style="background-color: #cbd3db">
     <post-card [Post]="post" (reportEmitter)="reportPost($event)" (deleteEmitter)="deletePost($event)"></post-card>
     <ion-row *ngFor="let comment of comments; let i = index">
-            <comment-card [Comment]="comment"></comment-card>
+            <comment-card style="width:90vh" [Comment]="comment"></comment-card>
     </ion-row>
     <ion-fab right bottom>
         <button ion-fab><ion-icon name="add"></ion-icon></button>

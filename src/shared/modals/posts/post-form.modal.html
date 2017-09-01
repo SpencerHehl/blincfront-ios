@@ -19,39 +19,50 @@
   <div style="height:100%; overflow:hidden;"> 
     <div style="width:102%; height:175px; background:#6b587d; margin-left:-1%;margin-top:-10px;text-align:center;z-index:1;padding-top:50px;border:none;">
         <button type="button" (click)="cancel()" style="width:25px;font-family: 'Montserrat', sans-serif;font-size:125%;margin-left:20px;color:white;float:left;background:none;border:none;"><ion-icon name="arrow-back"></ion-icon></button>
-        <span style="font-size:150%; color:white; width:100%;margin-left:-45px;"><b>New Post</b></span>
+        <button type="submit" (click)="cancel()" style="width:25px;font-family: 'Montserrat', sans-serif;font-size:125%;margin-right:30px;color:white;float:right;background:none;border:none;"><ion-icon name="log-in"></ion-icon></button>
+        
+        <span style="font-size:150%; color:white; width:100%;margin-left:10px;border-radius:15px;"><b>New Post</b></span>
     </div>
     
     <form autocomplete="off" (ngSubmit)="submitPost(createPostForm.value)" #createPostForm="ngForm">
       <div style="width:90%;background:white;height:80%;margin-left:5%;z-index:2;margin-top:-75px;overflow:hidden;">
         <ion-list>
           
-          <ion-item style="width:95%; padding:none;height:50px;">
-            <ion-textarea style="font-family: 'Montserrat', sans-serif;width:80%;font-size:100%;color:black;border:none;margin-top:10px;" placeholder="Title" name="title" (ngModel)="title"></ion-textarea>      
+            
+          <ion-item style="width:95%; padding:none;">
+            <ion-label floating>Title</ion-label>
+            <ion-input type="text" style="font-family: 'Montserrat', sans-serif;width:80%;font-size:100%;color:black;border:none;" name="title" (ngModel)="title"></ion-input>      
           </ion-item>
-          <ion-item style="width:95%; padding:none;height:50px;">
-            <ion-textarea style="font-family: 'Montserrat', sans-serif;width:80%;font-size:100%;color:black;border:none;margin-top:10px;" placeholder="Location" name="location" (ngModel)="location"></ion-textarea>      
+
+          
+          <ion-item style="width:95%; padding:none;">
+            <ion-label floating>Location</ion-label>
+            <ion-input type="text" style="font-family: 'Montserrat', sans-serif;width:80%;font-size:100%;color:black;border:none;" name="location" (ngModel)="location"></ion-input>      
           </ion-item>
-          <ion-item *ngIf="postType == 'photo'" style="width:95%; padding:none;height:50px;"> 
-            <ion-textarea style="font-family: 'Montserrat', sans-serif;width:80%;font-size:100%;color:black;border:none;margin-top:10px;"placeholder="Caption" name="caption" (ngModel)="caption"></ion-textarea>
+
+          
+          <ion-item *ngIf="postType == 'photo'" style="width:95%; padding:none;"> 
+              <ion-label *ngIf="postType == 'photo'" floating>Caption</ion-label>
+            <ion-input type="text" style="font-family: 'Montserrat', sans-serif;width:80%;font-size:100%;color:black;border:none;" name="caption" (ngModel)="caption"></ion-input>
           </ion-item>
-          <ion-item style="width:95%; padding:none;height:50px;">
-            <ion-label>Mappable</ion-label>
+
+          <ion-item style="width:95%; padding:none;margin-top:25px;">
+            <ion-label inline>Mappable</ion-label>
             <ion-toggle checked (ngModel)="mapable"></ion-toggle>
           </ion-item>
           
           <div>
-            <img *ngIf="postType == 'photo'" [src]="imageData" style="width:90%; margin-left:5%;padding:none;height:auto;">
+            <img *ngIf="postType == 'photo'" [src]="imageData" style="width:90%; margin-left:5%;padding:none;height:auto;margin-top:10px;">
           </div>
           
-          <ion-textarea *ngIf="postType == 'text'" rows="100" cols="75" style="font-family: 'Montserrat', sans-serif;font-size:100%;padding:1px 1px 1px 1px;width:90%;margin-left:5%;background:#f4f5f4;height:auto; border:none;" placeholder="Comment" name="comment" (ngModel)="comment"></ion-textarea>
+          <ion-label *ngIf="postType == 'text'" stacked style="margin-left:5%; margin-top:15px;">Content</ion-label>
+          <ion-textarea *ngIf="postType == 'text'" rows="100" cols="75" style="font-family: 'Montserrat', sans-serif;font-size:100%;padding:1px 1px 1px 1px;width:90%;margin-left:5%;background:#f4f5f4;height:auto; border:none;" name="comment" (ngModel)="comment"></ion-textarea>
           
         </ion-list>
         <div align-center>
         </div>
       </div>
       
-      <button type="submit" style="font-family: 'Montserrat', sans-serif;font-size:125%;width:100%; height:60px; background:#6b587d; position:fixed;bottom:0;left:0;color:white;z-index:10;"><b>Share</b></button>
     </form>
   </div>
   
